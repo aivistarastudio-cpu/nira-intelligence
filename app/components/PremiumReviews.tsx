@@ -4,71 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { fetchApprovedReviews, submitReview } from "@/app/actions/reviewActions";
 
-const initialReviews = [
-  {
-    id: -1,
-    name: "Dr. Ramesh Patel",
-    role: "Professor of Computer Science",
-    text: "NIRA has completely revolutionized our academic research. The speed at which it processes complex data models is simply unprecedented.",
-    avatar: "R",
-  },
-  {
-    id: -2,
-    name: "Prof. Neha Desai",
-    role: "Head of Data Science",
-    text: "As an educator, I've tested numerous AI platforms. NIRA's precision and intelligent context selection make it the ultimate tool for advanced learning.",
-    avatar: "N",
-  },
-  {
-    id: -3,
-    name: "Dr. Jignesh Shah",
-    role: "Principal Researcher",
-    text: "The architectural brilliance of NIRA is evident in its code generation. It understands complex logic seamlessly. A true masterpiece.",
-    avatar: "J",
-  },
-  {
-    id: -4,
-    name: "Sanjay Mehta",
-    role: "Senior Lecturer",
-    text: "My entire workflow has evolved. NIRA acts as a perfect intelligent assistant, allowing me to focus entirely on curriculum innovation.",
-    avatar: "S",
-  },
-  {
-    id: -5,
-    name: "Dr. Hiral Dave",
-    role: "Assistant Professor",
-    text: "The multimodal capabilities feel like they are from the future. Generating precise visual content for lectures has never been this fluid.",
-    avatar: "H",
-  },
-  {
-    id: -6,
-    name: "Amit Trivedi",
-    role: "AI Integration Lead",
-    text: "Deploying NIRA across our institution has yielded a 10x multiplier in productivity. The return on investment is absolutely incredible.",
-    avatar: "A",
-  },
-  {
-    id: -7,
-    name: "Dr. Kavita Amin",
-    role: "AI Ethics Board Member",
-    text: "NIRA ensures that our predictive models are not only accurate but also unbiased and deeply analytical. A benchmark for ethical AI.",
-    avatar: "K",
-  },
-  {
-    id: -8,
-    name: "Vishal Prajapati",
-    role: "Chief Technology Officer",
-    text: "Integrating NIRA into our enterprise stack took less than a day. The performance optimization is genuinely astonishing.",
-    avatar: "V",
-  },
-  {
-    id: -9,
-    name: "Prof. Sanjay Gadhavi",
-    role: "Dean of Engineering",
-    text: "It elevates the standard of innovation. My students and faculty are building applications and solving problems twice as fast.",
-    avatar: "S",
-  },
-];
+const initialReviews: any[] = [];
 
 // Unified Premium Easing (Apple-like slow, buttery glide)
 const premiumEasing = [0.16, 1, 0.3, 1];
