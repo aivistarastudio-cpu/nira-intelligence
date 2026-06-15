@@ -240,7 +240,7 @@ export default function Home() {
           <h2 className="text-[18px] sm:text-[32px] md:text-[42px] font-[600] tracking-[-0.02em] font-[var(--font-display)] text-center leading-[1.3] md:leading-[1.2] max-w-[90%] md:max-w-3xl">
             <span className="text-white">One request. </span>
             <span className="text-white/40">Multiple intelligences.</span> <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-blue-500">The best possible answer.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-amber-200 to-rose-500">The best possible answer.</span>
           </h2>
         </div>
 
