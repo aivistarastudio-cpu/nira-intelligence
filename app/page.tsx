@@ -157,9 +157,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main 
-      ref={mainRef}
-      className="force-dark relative w-full overflow-x-hidden text-white bg-black scroll-smooth z-10" 
+    <div 
+      className="force-dark relative w-full text-white bg-black z-10" 
       style={{ 
         paddingTop: 'env(safe-area-inset-top)', 
         paddingBottom: 'env(safe-area-inset-bottom)', 
@@ -413,6 +412,6 @@ export default function Home() {
           <polyline points="18 15 12 9 6 15" />
         </svg>
       </button>
-    </main>
+    </div>
   );
 }
