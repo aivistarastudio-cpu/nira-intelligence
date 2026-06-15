@@ -344,37 +344,23 @@ export default function Home() {
         <PremiumReviews />
       </div>
 
-      {/* Right Side Vertical Scroll Navigation & Hint */}
-      <div className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-6 pointer-events-none">
-        <div className="flex flex-col items-center gap-3 pointer-events-auto">
+      {/* Floating Premium Bottom Navigation Dock */}
+      <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+1.5rem)] md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none">
+        <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/70 backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
           <button
             onClick={() => {
               uiSound("click");
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="group relative flex items-center justify-center w-8 h-8 focus:outline-none cursor-pointer"
-            title="Home"
+            className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
+              activeSection === "hero"
+                ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                : "text-zinc-400 hover:text-white"
+            }`}
           >
-            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
-              activeSection === "hero" 
-                ? "bg-white scale-[1.8] shadow-[0_0_12px_rgba(255,255,255,0.8)]" 
-                : "bg-white/30 group-hover:bg-white/70"
-            }`} />
-            <span className="absolute right-10 text-[11px] font-medium tracking-wider uppercase text-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/10 whitespace-nowrap">
-              Home
-            </span>
+            Overview
           </button>
-
-          {/* Connecting Line with Animated Flowing Streak */}
-          <div className="relative w-[2px] h-16 bg-white/10 rounded-full overflow-hidden">
-            <div 
-              className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-transparent via-white to-transparent"
-              style={{
-                animation: "scrollFlowLine 2s cubic-bezier(0.25, 1, 0.5, 1) infinite"
-              }}
-            />
-          </div>
-
+          
           <button
             onClick={() => {
               uiSound("click");
@@ -383,30 +369,15 @@ export default function Home() {
                 container.scrollTo({ top: container.clientHeight, behavior: "smooth" });
               }
             }}
-            className="group relative flex items-center justify-center w-8 h-8 focus:outline-none cursor-pointer"
-            title="Reviews"
+            className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
+              activeSection === "reviews"
+                ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                : "text-zinc-400 hover:text-white"
+            }`}
           >
-            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
-              activeSection === "reviews" 
-                ? "bg-white scale-[1.8] shadow-[0_0_12px_rgba(255,255,255,0.8)]" 
-                : "bg-white/30 group-hover:bg-white/70"
-            }`} />
-            <span className="absolute right-10 text-[11px] font-medium tracking-wider uppercase text-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/10 whitespace-nowrap">
-              Reviews
-            </span>
+            Reviews
           </button>
         </div>
-
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes scrollFlowLine {
-            0% {
-              transform: translateY(-100%);
-            }
-            80%, 100% {
-              transform: translateY(200%);
-            }
-          }
-        `}} />
       </div>
     </main>
   );
