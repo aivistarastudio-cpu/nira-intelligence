@@ -1,0 +1,447 @@
+/* ============================= */
+/* NIRA MASONRY GRID */
+/* ============================= */
+
+.nira-grid {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    column-count: 3;
+    column-gap: 24px;
+}
+
+/* ============================= */
+/* IMAGE CARD */
+/* ============================= */
+
+.nira-card {
+    break-inside: avoid;
+    margin-bottom: 24px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    transition: transform .25s ease, box-shadow .25s ease;
+    background: rgba(18,22,30,.92);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 40px 120px rgba(0,0,0,.75), inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+.nira-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 30px 90px rgba(0,0,0,.7);
+}
+
+/* ============================= */
+/* IMAGE */
+/* ============================= */
+
+.nira-card-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform .35s ease;
+}
+
+.nira-card:hover .nira-card-img {
+    transform: scale(1.05);
+}
+
+/* ============================= */
+/* TOOL PANEL */
+/* ============================= */
+
+.nira-tools {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: all .25s ease;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 10px 35px rgba(0,0,0,.5);
+    padding: 6px 10px;
+    border-radius: 18px;
+}
+
+.nira-card:hover .nira-tools {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================= */
+/* TOOL BUTTON */
+/* ============================= */
+
+.nira-tool-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    color: white;
+    transition: .2s ease;
+}
+
+.nira-tool-btn svg {
+    width: 16px;
+    height: 16px;
+    opacity: .9;
+}
+
+.nira-tool-btn:hover {
+    background: rgba(255,255,255,.12);
+    transform: translateY(-1px);
+}
+
+.nira-tool-btn:active {
+    transform: scale(.92);
+    background: rgba(255,255,255,.85);
+    box-shadow: 0 2px 6px rgba(0,0,0,.4) inset;
+}
+
+.nira-tool-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.35), 0 6px 18px rgba(0,0,0,.35);
+}
+
+/* ============================= */
+/* PROMPT PANEL */
+/* ============================= */
+
+.nira-prompt-view {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    padding: 12px;
+    font-size: 13px;
+    color: white;
+}
+
+/* ============================= */
+/* VIEWER */
+/* ============================= */
+
+.nira-viewer {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(14px);
+    z-index: 9999;
+    padding: 40px;
+    animation: niraViewerFade .25s ease;
+}
+
+.nira-viewer-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+    transition: transform .25s ease;
+}
+
+.nira-viewer-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+/* ============================= */
+/* VIEWER TOOLS */
+/* ============================= */
+
+.nira-viewer-tools {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(20,20,20,0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.nira-viewer-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.nira-viewer-btn:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+/* ============================= */
+/* VIEWER NAVIGATION */
+/* ============================= */
+
+.nira-viewer-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.nira-viewer-nav:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+.nira-viewer-prev {
+    left: 30px;
+}
+
+.nira-viewer-next {
+    right: 30px;
+}
+
+/* ============================= */
+/* GENERATING CARD */
+/* ============================= */
+
+.nira-generating-card {
+    width: 100%;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px);
+    break-inside: avoid;
+    margin-bottom: 24px;
+}
+
+.nira-generate-btn:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+/* ============================= */
+/* PROMPT VIEWER */
+/* ============================= */
+
+.nira-prompt-viewer {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.nira-prompt-box {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    color: white;
+}
+
+.nira-prompt-text {
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.nira-prompt-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.nira-prompt-actions button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+    color: #000;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1000px) {
+    .nira-grid {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .nira-grid {
+        column-count: 1;
+    }
+}
+
+/* ============================= */
+/* ANIMATIONS */
+/* ============================= */
+
+@keyframes niraViewerFade {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes niraModalFade {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========================================= */
+/* NIRA FINAL VISIBILITY + APPLE LEVEL POLISH */
+/* ========================================= */
+
+/* smoother fonts */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* prompt editor */
+.nira-prompt-editor {
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.08);
+    color: white;
+}
+
+/* focus glow */
+.nira-prompt-editor:focus {
+    border: 1px solid rgba(120,160,255,.6);
+    box-shadow: 0 0 0 2px rgba(120,160,255,.15), 0 10px 30px rgba(0,0,0,.4);
+}
+
+/* scrollbar polish */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.25);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* buttons */
+button {
+    transition: .2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+/* =============================== */
+/* NIRA GRID POLISH — SAFE PATCH   */
+/* =============================== */
+
+/* GLOW LAYER */
+.nira-image-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.nira-image-card:hover::after {
+    opacity: 1;
+}
+
+/* LIGHT SWEEP */
+.nira-image-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
+    transform: skewX(-20deg);
+    opacity: 0;
+}
+
+.nira-image-card:hover::before {
+    animation: niraSweepLight 0.8s ease;
+    opacity: 1;
+}
+
+@keyframes niraSweepLight {
+    from { left: -100%; }
+    to { left: 120%; }
+}
+
+/* TOOLBAR INITIAL */
+.nira-image-toolbar {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+    transition: all 0.3s ease;
+}
+
+.nira-image-card:hover .nira-image-toolbar {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}

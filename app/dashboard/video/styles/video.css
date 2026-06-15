@@ -1,0 +1,341 @@
+.topbar {
+  height: 64px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* center capsule */
+.model-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 4px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* buttons */
+.model-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s ease;
+}
+
+.model-btn:hover {
+  color: white;
+  background: rgba(255,255,255,0.1);
+}
+
+.model-btn.active {
+  background: white;
+  color: black;
+  transform: scale(1.05);
+  box-shadow: 0 2px 10px rgba(255,255,255,0.15);
+}
+
+/* right section */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.model-btn.active {
+  background: rgba(0, 255, 180, 0.08);
+  color: #00ffb4;
+
+  border: 1px solid rgba(0,255,180,0.3);
+
+  box-shadow: 0 0 12px rgba(0,255,180,0.2);
+
+  transform: scale(1.05);
+}
+
+/* =========================
+   NIRA SMOOTH MODEL BUTTON
+   ========================= */
+
+.model-btn {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  will-change: transform, box-shadow, background;
+  backface-visibility: hidden;
+}
+
+/* hover smooth */
+.model-btn:hover {
+  transform: scale(1.03);
+}
+
+/* active smooth glow */
+.model-btn.active {
+  background: rgba(0, 255, 180, 0.08);
+  color: #00ffb4;
+
+  border: 1px solid rgba(0,255,180,0.3);
+
+  box-shadow: 0 0 12px rgba(0,255,180,0.2);
+
+  transform: scale(1.06);
+}
+
+/* ultra smooth press feel */
+.model-btn:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
+}
+
+.model-btn.active {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 8px rgba(0,255,180,0.15);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0,255,180,0.3);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(0,255,180,0.15);
+  }
+}
+
+/* =========================
+   NIRA SAFE + SMOOTH BUTTON
+   ========================= */
+
+.model-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+
+  color: rgba(255,255,255,0.6);
+
+  transition: all 0.2s ease;
+  transform: scale(1);
+}
+
+/* hover (desktop only feel) */
+.model-btn:hover {
+  color: white;
+  background: rgba(255,255,255,0.08);
+  transform: scale(1.03);
+}
+
+/* active (selected model) */
+.model-btn.active {
+  background: rgba(0, 255, 180, 0.08);
+  color: #00ffb4;
+
+  border: 1px solid rgba(0,255,180,0.25);
+
+  box-shadow: 0 0 8px rgba(0,255,180,0.15);
+
+  transform: scale(1.04);
+}
+
+/* click press feedback */
+.model-btn:active {
+  transform: scale(0.96);
+}
+
+/* grid */
+.grid-bg {
+  background: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.2; }
+}
+.animate-fadeIn {
+  animation: fadeIn 1s ease forwards;
+}
+
+/* scan */
+@keyframes scan {
+  0% { top: 0%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.animate-scan {
+  animation: scan 2s linear infinite;
+  position: absolute;
+}
+
+/* word float */
+@keyframes wordFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+.animate-word {
+  animation: wordFloat 2.5s ease-in-out infinite;
+}
+
+/* glow words */
+@keyframes wordGlow {
+  0% { opacity: 0; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px rgba(255,255,255,0.4); }
+  100% { opacity: 0.4; transform: scale(1); }
+}
+
+.animate-word-glow {
+  animation: wordGlow 2.5s ease-in-out infinite;
+}
+
+/* energy line */
+@keyframes energy {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.animate-energy {
+  animation: energy 2s linear infinite;
+}
+
+/* ================================
+🌌 GRID BACKGROUND (AI GRID)
+================================ */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ================================
+✨ WORD GLOW ANIMATION
+================================ */
+@keyframes wordGlow {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    text-shadow: 0 0 20px rgba(255,255,255,0.2);
+  }
+  100% {
+    opacity: 0.4;
+    transform: translateY(-6px) scale(1.05);
+  }
+}
+
+.animate-word-glow {
+  animation: wordGlow 2.2s ease-in-out infinite;
+}
+
+/* ================================
+⚡ ENERGY LINE (CENTER SCAN)
+================================ */
+@keyframes energyMove {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.animate-energy {
+  animation: energyMove 2.5s linear infinite;
+}
+
+/* ================================
+🌫 FADE TEXT
+================================ */
+@keyframes fade {
+  0% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.2; }
+}
+
+.animate-fade {
+  animation: fade 2s ease-in-out infinite;
+}
+
+/* ================================
+🎥 VIDEO FADE IN
+================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* ================================
+🔥 CARD HOVER GLOW (BONUS)
+================================ */
+.video-card:hover {
+  box-shadow: 0 0 120px rgba(255,255,255,0.08);
+  transition: 0.4s ease;
+}
+
+/* ================================
+💡 SMOOTH BUTTON FEEL
+================================ */
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* shimmer effect */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.3),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}

@@ -53,7 +53,7 @@ export const CodeBlock = React.memo(function CodeBlock({ block, codeHtml }: { bl
         </button>
       </div>
 
-      <pre className="px-6 py-6 overflow-x-auto text-[15px] font-mono leading-[1.7] text-[#E5E5E5] select-text bg-transparent custom-scrollbar">
+      <pre className="px-6 py-6 overflow-x-auto text-code text-[#E5E5E5] select-text bg-transparent custom-scrollbar">
         <code
           className="bg-transparent block"
           dangerouslySetInnerHTML={{ __html: codeHtml }}

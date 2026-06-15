@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Block private app routes from Google Indexing
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /billing/
+Disallow: /chat/
+Disallow: /image/
+Disallow: /video/
+Disallow: /settings/
+Disallow: /welcome/
+Disallow: /api/
+
+Sitemap: https://www.niraintelligence.com/sitemap.xml

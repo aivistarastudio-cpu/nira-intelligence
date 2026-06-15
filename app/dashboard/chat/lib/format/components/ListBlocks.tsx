@@ -34,7 +34,7 @@ export const InteractiveChecklistItem = React.memo(function InteractiveChecklist
       
       <span 
         className={`
-          leading-[1.85] text-[16px] md:text-[17px] transition-all duration-300 select-text tracking-[-0.01em] antialiased [text-rendering:optimizeLegibility] [text-shadow:none_!important]
+          leading-[1.6] text-[17px] transition-all duration-300 select-text tracking-[-0.018em] antialiased [text-rendering:optimizeLegibility] [text-shadow:none_!important]
           ${isChecked ? "line-through text-[var(--nira-subtext)] opacity-70 font-[400]" : "text-[var(--nira-text)] font-[400]"}
         `}
       >
@@ -92,7 +92,7 @@ export const renderList = (items: ExtendedListItem[], ordered = false, level = 0
               </span>
 
               <div className="flex-1 min-w-0 pt-[1.5px]">
-                <span className="block leading-[1.85] text-[var(--nira-text)] font-[400] text-[16px] md:text-[17px] tracking-[-0.01em] antialiased [text-rendering:optimizeLegibility] [text-shadow:none_!important]">
+                <span className="block leading-[1.6] text-[var(--nira-text)] font-[400] text-[17px] tracking-[-0.018em] antialiased [text-rendering:optimizeLegibility] [text-shadow:none_!important]">
                   {renderInline(text || "")}
                 </span>
 

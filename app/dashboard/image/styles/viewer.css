@@ -1,0 +1,2524 @@
+/* ============================= */
+/* MAIN VIEWER */
+/* ============================= */
+
+.nira-viewer{
+
+position:fixed;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.55);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+z-index:9999;
+
+animation:niraViewerFade .25s ease;
+
+}
+
+/* smooth fade */
+
+@keyframes niraViewerFade{
+
+from{
+opacity:0;
+transform:scale(.97);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* ============================= */
+/* IMAGE STAGE */
+/* ============================= */
+
+.nira-viewer-stage{
+
+position:relative;
+
+max-width:90vw;
+max-height:85vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:22px;
+
+overflow:hidden;
+
+}
+
+/* ============================= */
+/* IMAGE */
+/* ============================= */
+
+.nira-viewer-img{
+
+max-width:100%;
+max-height:85vh;
+
+border-radius:18px;
+
+box-shadow:
+0 30px 80px rgba(0,0,0,.65),
+0 0 0 1px rgba(255,255,255,.04);
+
+transition:
+transform .25s ease,
+box-shadow .25s ease;
+
+}
+
+/* ============================= */
+/* CLOSE BUTTON */
+/* ============================= */
+
+.nira-viewer-close{
+
+position:absolute;
+top:28px;
+right:30px;
+
+width:42px;
+height:42px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+cursor:pointer;
+
+backdrop-filter:blur(12px);
+
+transition:.2s;
+
+}
+
+.nira-viewer-close:hover{
+
+background:rgba(255,255,255,.12);
+transform:scale(1.05);
+
+}
+
+/* ============================= */
+/* NAV BUTTON */
+/* ============================= */
+
+.nira-viewer-nav{
+
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+
+width:50px;
+height:50px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:16px;
+
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+cursor:pointer;
+
+backdrop-filter:blur(12px);
+
+transition:.2s;
+
+}
+
+.nira-viewer-nav:hover{
+
+background:rgba(255,255,255,.12);
+transform:translateY(-50%) scale(1.05);
+
+}
+
+.nira-viewer-nav.left{
+left:40px;
+}
+
+.nira-viewer-nav.right{
+right:40px;
+}
+
+/* ============================= */
+/* TOOLBAR */
+/* ============================= */
+
+.nira-viewer-toolbar{
+
+position:absolute;
+bottom:30px;
+
+display:flex;
+gap:14px;
+
+padding:8px 14px;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(16px);
+
+box-shadow:
+0 10px 40px rgba(0,0,0,.35);
+
+}
+
+/* toolbar buttons */
+
+.nira-viewer-toolbar button{
+
+width:36px;
+height:36px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:10px;
+
+background:transparent;
+border:none;
+
+color:white;
+
+cursor:pointer;
+
+transition:.18s;
+
+}
+
+.nira-viewer-toolbar button:hover{
+
+background:rgba(255,255,255,.12);
+transform:scale(1.05);
+
+}
+
+/* ============================= */
+/* PROMPT MODAL */
+/* ============================= */
+
+.nira-viewer-prompt-overlay{
+
+position:absolute;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(16px);
+
+}
+
+/* modal */
+
+.nira-viewer-prompt-box{
+
+width:640px;
+max-width:92vw;
+
+padding:34px;
+
+border-radius:20px;
+
+background:rgba(18,22,30,.9);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.75),
+inset 0 0 0 1px rgba(255,255,255,.04);
+
+color:white;
+
+}
+
+/* textarea */
+
+/* prompt editor */
+
+.nira-prompt-editor{
+
+width:100%;
+
+min-height:180px;
+max-height:420px;
+
+margin-top:12px;
+
+padding:16px;
+
+border-radius:14px;
+
+background:rgba(0,0,0,.35);
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+font-size:14px;
+line-height:1.6;
+
+resize:none;
+
+outline:none;
+
+overflow-y:auto;
+
+}
+
+.nira-prompt-editor::-webkit-scrollbar{
+width:6px;
+}
+
+.nira-prompt-editor::-webkit-scrollbar-thumb{
+background:rgba(255,255,255,.25);
+border-radius:6px;
+}
+
+/* actions */
+
+.nira-prompt-actions{
+
+margin-top:16px;
+
+display:flex;
+justify-content:flex-end;
+gap:12px;
+
+}
+
+/* regenerate */
+
+.nira-regenerate-btn{
+
+padding:8px 14px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.12);
+
+color:white;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.nira-regenerate-btn:hover{
+
+background:rgba(255,255,255,.16);
+
+}
+
+/* ================================= */
+/* NIRA PREMIUM MODAL UPGRADE */
+/* append below existing css */
+/* ================================= */
+
+/* smooth glass depth */
+
+.nira-viewer-prompt-box,
+.nira-viewer-delete-box{
+
+background:linear-gradient(
+180deg,
+rgba(25,25,25,.85),
+rgba(15,15,15,.92)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(24px);
+-webkit-backdrop-filter:blur(24px);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.65),
+0 0 0 1px rgba(255,255,255,.04) inset;
+
+border-radius:20px;
+
+transform:translateY(0);
+animation:niraModalFloat .25s ease;
+
+}
+
+/* modal floating animation */
+
+@keyframes niraModalFloat{
+
+from{
+opacity:0;
+transform:translateY(8px) scale(.97);
+}
+
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+
+}
+
+
+/* ================================= */
+/* TEXTAREA PREMIUM */
+/* ================================= */
+
+.nira-prompt-editor{
+
+background:rgba(0,0,0,.35);
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 0 1px rgba(255,255,255,.02) inset;
+
+transition:.18s;
+
+}
+
+.nira-prompt-editor:focus{
+
+border:1px solid rgba(255,255,255,.18);
+
+box-shadow:
+0 0 0 2px rgba(255,255,255,.05);
+
+}
+
+
+/* ================================= */
+/* BUTTON SYSTEM */
+/* ================================= */
+
+.nira-regenerate-btn{
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.12),
+rgba(255,255,255,.05)
+);
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.35);
+
+}
+
+.nira-regenerate-btn:hover{
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.2),
+rgba(255,255,255,.08)
+);
+
+transform:translateY(-1px);
+
+}
+
+
+/* cancel button */
+
+.nira-delete-actions button:first-child{
+
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.12);
+
+transition:.18s;
+
+}
+
+.nira-delete-actions button:first-child:hover{
+
+background:rgba(255,255,255,.12);
+
+}
+
+
+/* delete button */
+
+.nira-delete-actions .delete{
+
+background:linear-gradient(
+180deg,
+rgba(255,70,70,.95),
+rgba(200,30,30,.9)
+);
+
+border:none;
+
+box-shadow:
+0 8px 25px rgba(255,60,60,.35);
+
+transition:.18s;
+
+}
+
+.nira-delete-actions .delete:hover{
+
+transform:translateY(-1px);
+box-shadow:
+0 12px 30px rgba(255,60,60,.45);
+
+}
+
+
+/* ================================= */
+/* OVERLAY IMPROVEMENT */
+/* ================================= */
+
+.nira-viewer-prompt-overlay,
+.nira-viewer-delete-overlay{
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(22px);
+-webkit-backdrop-filter:blur(22px);
+
+animation:niraFade .18s ease;
+
+}
+
+@keyframes niraFade{
+
+from{opacity:0}
+to{opacity:1}
+
+}
+
+/* =============================== */
+/* DELETE MODAL FIX + CENTER */
+/* =============================== */
+
+.nira-viewer-delete-overlay{
+
+position:fixed;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+z-index:10000;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+
+animation:niraFade .18s ease;
+
+}
+
+/* modal box */
+
+.nira-viewer-delete-box{
+
+width:340px;
+
+padding:26px;
+
+border-radius:18px;
+
+text-align:center;
+
+background:linear-gradient(
+180deg,
+rgba(28,28,28,.92),
+rgba(18,18,18,.96)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 30px 80px rgba(0,0,0,.65),
+0 0 0 1px rgba(255,255,255,.04) inset;
+
+animation:niraModalFloat .22s ease;
+
+}
+
+/* heading */
+
+.nira-viewer-delete-box h3{
+
+font-size:18px;
+margin-bottom:6px;
+
+}
+
+/* text */
+
+.nira-viewer-delete-box p{
+
+font-size:14px;
+opacity:.75;
+
+margin-bottom:18px;
+
+}
+
+/* actions */
+
+.nira-delete-actions{
+
+display:flex;
+justify-content:center;
+
+gap:12px;
+
+}
+
+/* cancel */
+
+.nira-delete-actions button:first-child{
+
+padding:8px 16px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.15);
+
+color:white;
+
+cursor:pointer;
+
+transition:.15s;
+
+}
+
+.nira-delete-actions button:first-child:hover{
+
+background:rgba(255,255,255,.16);
+
+}
+
+/* delete */
+
+.nira-delete-actions .delete{
+
+padding:8px 16px;
+
+border-radius:10px;
+
+background:linear-gradient(
+180deg,
+rgba(255,80,80,.95),
+rgba(210,30,30,.9)
+);
+
+color:white;
+
+border:none;
+
+box-shadow:
+0 10px 25px rgba(255,60,60,.35);
+
+cursor:pointer;
+
+transition:.15s;
+
+}
+
+.nira-delete-actions .delete:hover{
+
+transform:translateY(-1px);
+
+box-shadow:
+0 14px 30px rgba(255,60,60,.45);
+
+}
+
+/* ================================= */
+/* NIRA PROMPT MODAL — PREMIUM */
+/* ================================= */
+
+.nira-viewer-prompt-overlay{
+
+position:fixed;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+z-index:10001;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+animation:niraFade .18s ease;
+
+}
+
+/* main modal */
+
+.nira-viewer-prompt-box{
+
+width:420px;
+
+padding:28px;
+
+border-radius:20px;
+
+background:linear-gradient(
+180deg,
+rgba(28,28,28,.94),
+rgba(18,18,18,.97)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 40px 100px rgba(0,0,0,.65),
+0 0 0 1px rgba(255,255,255,.04) inset;
+
+animation:niraModalFloat .22s ease;
+
+}
+
+/* heading */
+
+.nira-viewer-prompt-box h3{
+
+font-size:18px;
+margin-bottom:14px;
+opacity:.9;
+
+}
+
+/* textarea */
+
+.nira-prompt-editor{
+
+width:100%;
+height:110px;
+
+resize:none;
+
+border-radius:12px;
+
+padding:12px;
+
+font-size:14px;
+
+color:white;
+
+background:rgba(0,0,0,.45);
+
+border:1px solid rgba(255,255,255,.08);
+
+outline:none;
+
+transition:.15s;
+
+}
+
+.nira-prompt-editor:focus{
+
+border:1px solid rgba(120,170,255,.6);
+
+box-shadow:
+0 0 0 2px rgba(120,170,255,.15);
+
+}
+
+/* buttons container */
+
+.nira-prompt-actions{
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:10px;
+
+margin-top:16px;
+
+}
+
+/* regenerate button */
+
+.nira-regenerate-btn{
+
+padding:8px 16px;
+
+border-radius:10px;
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.18),
+rgba(255,255,255,.08)
+);
+
+border:1px solid rgba(255,255,255,.2);
+
+color:white;
+
+cursor:pointer;
+
+transition:.15s;
+
+}
+
+.nira-regenerate-btn:hover{
+
+transform:translateY(-1px);
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.25),
+rgba(255,255,255,.12)
+);
+
+}
+
+/* close button */
+
+.nira-prompt-actions button:last-child{
+
+padding:8px 16px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.15);
+
+color:white;
+
+cursor:pointer;
+
+transition:.15s;
+
+}
+
+.nira-prompt-actions button:last-child:hover{
+
+background:rgba(255,255,255,.18);
+
+}
+
+/* ============================= */
+/* NIRA VIEWER FINAL PATCH */
+/* ADD ONLY AT FILE BOTTOM */
+/* ============================= */
+
+
+/* arrow position improve */
+
+.nira-viewer-nav.left{
+left:32px;
+}
+
+.nira-viewer-nav.right{
+right:32px;
+}
+
+
+/* arrow premium glass */
+
+.nira-viewer-nav{
+
+width:56px;
+height:56px;
+
+background:rgba(20,20,20,.55);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:16px;
+
+backdrop-filter:blur(14px);
+
+box-shadow:
+0 10px 28px rgba(0,0,0,.45),
+inset 0 1px 0 rgba(255,255,255,.04);
+
+transition:.18s ease;
+
+z-index:40;
+
+}
+
+.nira-viewer-nav:hover{
+
+background:rgba(36,36,36,.8);
+
+transform:translateY(-50%) scale(1.06);
+
+}
+
+
+/* toolbar polish */
+
+.nira-viewer-toolbar{
+
+bottom:30px;
+
+background:rgba(15,15,15,.6);
+
+border:1px solid rgba(255,255,255,.06);
+
+backdrop-filter:blur(18px);
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.55),
+inset 0 1px 0 rgba(255,255,255,.05);
+
+z-index:35;
+
+}
+
+
+/* toolbar button polish */
+
+.nira-viewer-toolbar button{
+
+width:48px;
+height:48px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.06);
+
+transition:.18s ease;
+
+}
+
+.nira-viewer-toolbar button:hover{
+
+background:rgba(255,255,255,.18);
+
+transform:translateY(-1px);
+
+}
+
+
+/* viewer image safe layer */
+
+.nira-viewer-img{
+
+position:relative;
+
+z-index:10;
+
+}
+
+
+/* stage safe layer */
+
+.nira-viewer-stage{
+
+position:relative;
+
+z-index:5;
+
+}
+
+/* ============================= */
+/* NIRA VIEWER OPEN ANIMATION */
+/* ADD AT BOTTOM */
+/* ============================= */
+
+.nira-viewer{
+
+animation:niraViewerFade .28s ease;
+}
+
+@keyframes niraViewerFade{
+
+from{
+opacity:0;
+backdrop-filter:blur(0px);
+}
+
+to{
+opacity:1;
+backdrop-filter:blur(10px);
+}
+
+}
+
+
+/* image cinematic zoom */
+
+.nira-viewer-img{
+
+animation:niraViewerZoom .35s cubic-bezier(.22,.9,.25,1);
+transform-origin:center center;
+
+}
+
+@keyframes niraViewerZoom{
+
+0%{
+transform:scale(.92);
+opacity:.4;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.nira-viewer-stage{
+overflow:hidden;
+}
+
+/* ============================= */
+/* NIRA IMAGE SLIDE TRANSITION */
+/* ============================= */
+
+.nira-viewer-img{
+
+transition:
+transform .35s cubic-bezier(.22,.9,.25,1),
+opacity .25s ease;
+
+}
+
+
+/* slide left */
+
+.nira-slide-left{
+
+animation:niraSlideLeft .35s cubic-bezier(.22,.9,.25,1);
+
+}
+
+@keyframes niraSlideLeft{
+
+0%{
+transform:translateX(60px) scale(.98);
+opacity:.4;
+}
+
+100%{
+transform:translateX(0) scale(1);
+opacity:1;
+}
+
+}
+
+
+/* slide right */
+
+.nira-slide-right{
+
+animation:niraSlideRight .35s cubic-bezier(.22,.9,.25,1);
+
+}
+
+@keyframes niraSlideRight{
+
+0%{
+transform:translateX(-60px) scale(.98);
+opacity:.4;
+}
+
+100%{
+transform:translateX(0) scale(1);
+opacity:1;
+}
+
+}
+
+/* ============================= */
+/* NIRA SLIDE TRANSITION */
+/* ============================= */
+
+.nira-viewer-stage{
+overflow:hidden;
+position:relative;
+}
+
+.nira-viewer-img{
+will-change:transform,opacity;
+}
+
+/* NEXT IMAGE */
+
+.nira-slide-next{
+animation:niraSlideNext .45s cubic-bezier(.22,.9,.25,1);
+}
+
+@keyframes niraSlideNext{
+
+0%{
+transform:translateX(120px) scale(.95);
+opacity:.3;
+}
+
+100%{
+transform:translateX(0) scale(1);
+opacity:1;
+}
+
+}
+
+
+/* PREV IMAGE */
+
+.nira-slide-prev{
+animation:niraSlidePrev .45s cubic-bezier(.22,.9,.25,1);
+}
+
+@keyframes niraSlidePrev{
+
+0%{
+transform:translateX(-120px) scale(.95);
+opacity:.3;
+}
+
+100%{
+transform:translateX(0) scale(1);
+opacity:1;
+}
+
+}
+
+/* ============================= */
+/* NIRA VIEWER CSS SLIDE FEEL */
+/* ============================= */
+
+.nira-viewer-stage{
+position:relative;
+overflow:hidden;
+}
+
+/* image transition */
+
+.nira-viewer-img{
+
+animation:niraViewerAppear .35s cubic-bezier(.22,.9,.25,1);
+
+}
+
+@keyframes niraViewerAppear{
+
+0%{
+transform:translateX(40px) scale(.97);
+opacity:.2;
+filter:blur(6px);
+}
+
+100%{
+transform:translateX(0) scale(1);
+opacity:1;
+filter:blur(0);
+}
+
+}
+
+/* slight background motion */
+
+.nira-viewer{
+
+animation:niraViewerFade .25s ease;
+
+}
+
+@keyframes niraViewerFade{
+
+from{
+opacity:.6;
+}
+
+to{
+opacity:1;
+}
+
+}
+
+/* ============================= */
+/* NIRA IMAGE OPEN ANIMATION */
+/* ============================= */
+
+.nira-card img{
+
+transition:
+transform .35s cubic-bezier(.22,.9,.25,1),
+box-shadow .35s ease;
+
+}
+
+/* hover feel */
+
+.nira-card:hover img{
+
+transform:scale(1.03);
+
+}
+
+/* click animation */
+
+.nira-card:active img{
+
+transform:scale(.96);
+
+}
+
+
+/* viewer open zoom */
+
+.nira-viewer-img{
+
+animation:niraViewerZoom .35s cubic-bezier(.22,.9,.25,1);
+
+}
+
+@keyframes niraViewerZoom{
+
+0%{
+
+transform:scale(.85);
+opacity:.2;
+filter:blur(8px);
+
+}
+
+100%{
+
+transform:scale(1);
+opacity:1;
+filter:blur(0);
+
+}
+
+}
+
+.nira-viewer-img{
+will-change: transform, opacity;
+
+
+.nira-viewer-img{
+will-change: transform, opacity;
+backface-visibility: hidden;
+}
+
+}
+
+/* ============================= */
+/* NIRA VIEWER TOOLBAR FINAL FIX */
+/* ============================= */
+
+.nira-viewer-toolbar{
+
+bottom:24px;
+
+gap:10px;
+
+padding:8px 12px;
+
+border-radius:14px;
+
+background:rgba(18,18,18,.55);
+
+border:1px solid rgba(255,255,255,.06);
+
+backdrop-filter:blur(18px);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.45),
+inset 0 1px 0 rgba(255,255,255,.05);
+
+}
+
+
+/* buttons */
+
+.nira-viewer-toolbar button{
+
+width:40px;
+height:40px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.05);
+
+transition:.18s ease;
+
+}
+
+
+/* hover */
+
+.nira-viewer-toolbar button:hover{
+
+background:rgba(255,255,255,.16);
+
+transform:translateY(-1px);
+
+}
+
+
+/* icon size */
+
+.nira-viewer-toolbar svg{
+
+width:18px;
+height:18px;
+
+opacity:.9;
+
+}
+
+/* ============================= */
+/* NIRA NAV BUTTON FINAL FIX */
+/* ============================= */
+
+.nira-viewer-nav{
+
+width:52px;
+height:52px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:14px;
+
+background:rgba(18,18,18,.55);
+
+border:1px solid rgba(255,255,255,.06);
+
+backdrop-filter:blur(16px);
+
+box-shadow:
+0 10px 28px rgba(0,0,0,.45),
+inset 0 1px 0 rgba(255,255,255,.05);
+
+transition:
+transform .18s ease,
+background .18s ease,
+box-shadow .18s ease;
+
+cursor:pointer;
+
+}
+
+
+/* hover */
+
+.nira-viewer-nav:hover{
+
+background:rgba(28,28,28,.85);
+
+transform:translateY(-50%) scale(1.08);
+
+box-shadow:
+0 14px 34px rgba(0,0,0,.55),
+inset 0 1px 0 rgba(255,255,255,.08);
+
+}
+
+
+/* click feel */
+
+.nira-viewer-nav:active{
+
+transform:translateY(-50%) scale(.94);
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.35);
+
+}
+
+
+/* arrow icon */
+
+.nira-viewer-nav svg{
+
+width:22px;
+height:22px;
+
+opacity:.9;
+
+transition:transform .18s ease;
+
+}
+
+
+/* arrow move feel */
+
+.nira-viewer-nav:hover svg{
+
+transform:scale(1.1);
+
+}
+
+.nira-viewer-nav:hover{
+outline:1px solid rgba(255,255,255,.12);
+}
+
+/* ============================= */
+/* NIRA SIDE PREVIEW BLUR */
+/* ============================= */
+
+.nira-viewer-stage{
+
+position:relative;
+overflow:hidden;
+
+}
+
+
+/* background ghost images feel */
+
+.nira-viewer{
+
+background:
+radial-gradient(circle at center,
+rgba(0,0,0,.2) 0%,
+rgba(0,0,0,.6) 40%,
+rgba(0,0,0,.92) 80%);
+
+}
+
+
+/* side blur illusion */
+
+.nira-viewer-stage::before,
+.nira-viewer-stage::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+bottom:0;
+
+width:120px;
+
+pointer-events:none;
+
+z-index:5;
+
+}
+
+
+/* left fade */
+
+.nira-viewer-stage::before{
+
+left:0;
+
+background:linear-gradient(
+to right,
+rgba(0,0,0,.85),
+rgba(0,0,0,0)
+);
+
+}
+
+
+/* right fade */
+
+.nira-viewer-stage::after{
+
+right:0;
+
+background:linear-gradient(
+to left,
+rgba(0,0,0,.85),
+rgba(0,0,0,0)
+);
+
+}
+
+/* ============================= */
+/* NIRA FOCUS GLOW */
+/* ============================= */
+
+.nira-viewer-img{
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.8),
+0 0 60px rgba(0,120,255,.15);
+
+transition:box-shadow .3s ease;
+
+}
+
+/* focus background */
+
+.nira-viewer{
+
+background:
+radial-gradient(
+circle at center,
+rgba(0,0,0,.6) 0%,
+rgba(0,0,0,.85) 60%,
+rgba(0,0,0,.96) 100%
+);
+
+}
+
+.nira-viewer-toolbar{
+
+opacity:.3;
+
+transition:opacity .25s ease;
+
+}
+
+.nira-viewer:hover .nira-viewer-toolbar{
+
+opacity:1;
+
+}
+
+/* ===== NIRA NAV BUTTON CLEAN FIX ===== */
+
+.nira-viewer-nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+
+width:46px;
+height:46px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:12px;
+
+background:rgba(0,0,0,.55);
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(8px);
+
+box-shadow:0 8px 20px rgba(0,0,0,.45);
+
+cursor:pointer;
+
+transition:transform .15s ease, background .15s ease;
+}
+
+.nira-viewer-nav.left{
+left:18px;
+}
+
+.nira-viewer-nav.right{
+right:18px;
+}
+
+.nira-viewer-nav:hover{
+background:rgba(255,255,255,.18);
+transform:translateY(-50%) scale(1.05);
+}
+
+.nira-viewer-nav:active{
+transform:translateY(-50%) scale(.92);
+}
+
+.nira-viewer-nav svg{
+width:20px;
+height:20px;
+opacity:.9;
+}
+
+/* ========================================= */
+/* NIRA CINEMATIC VIEWER FIX (APPLE LEVEL) */
+/* ========================================= */
+
+/* viewer root */
+
+.nira-viewer{
+position:fixed;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.78);
+backdrop-filter:blur(18px);
+
+z-index:9999;
+overflow:hidden;
+}
+
+/* image stage */
+
+.nira-viewer-stage{
+
+position:relative;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+width:100%;
+height:100%;
+
+padding:60px;
+
+background:transparent;
+
+}
+
+/* image */
+
+.nira-viewer-img{
+
+max-width:92vw;
+max-height:92vh;
+
+width:auto;
+height:auto;
+
+object-fit:contain;
+
+border-radius:18px;
+
+box-shadow:
+0 40px 140px rgba(0,0,0,.65),
+0 8px 30px rgba(0,0,0,.45);
+
+transition:
+transform .25s ease,
+box-shadow .3s ease;
+
+}
+
+/* hover cinematic lift */
+
+.nira-viewer-img:hover{
+
+box-shadow:
+0 60px 180px rgba(0,0,0,.75),
+0 12px 50px rgba(0,0,0,.5);
+
+}
+
+/* close button */
+
+.nira-viewer-close{
+
+position:absolute;
+
+top:22px;
+right:22px;
+
+width:44px;
+height:44px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(12px);
+
+border-radius:50%;
+
+border:1px solid rgba(255,255,255,.08);
+
+cursor:pointer;
+
+z-index:100;
+
+transition:all .2s ease;
+
+}
+
+.nira-viewer-close:hover{
+
+background:rgba(255,255,255,.12);
+transform:scale(1.08);
+
+}
+
+/* navigation arrows */
+
+.nira-viewer-nav{
+
+position:absolute;
+
+top:50%;
+transform:translateY(-50%);
+
+width:50px;
+height:50px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(12px);
+
+border-radius:50%;
+
+border:1px solid rgba(255,255,255,.08);
+
+cursor:pointer;
+
+z-index:90;
+
+transition:all .2s ease;
+
+}
+
+.nira-viewer-nav:hover{
+
+background:rgba(255,255,255,.12);
+transform:translateY(-50%) scale(1.08);
+
+}
+
+.nira-viewer-nav.left{
+
+left:22px;
+
+}
+
+.nira-viewer-nav.right{
+
+right:22px;
+
+}
+
+/* bottom tool capsule */
+
+.nira-viewer-toolbar{
+
+position:absolute;
+
+bottom:28px;
+
+left:50%;
+transform:translateX(-50%);
+
+display:flex;
+gap:12px;
+
+padding:10px 14px;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(18px);
+
+border-radius:18px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+
+z-index:100;
+
+}
+
+/* tool buttons */
+
+.nira-viewer-toolbar button{
+
+width:42px;
+height:42px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:10px;
+
+background:transparent;
+
+border:none;
+
+color:white;
+
+cursor:pointer;
+
+transition:all .18s ease;
+
+}
+
+.nira-viewer-toolbar button:hover{
+
+background:rgba(255,255,255,.12);
+transform:translateY(-2px);
+
+}
+
+/* prompt modal overlay */
+
+.nira-viewer-prompt-overlay{
+
+position:fixed;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(12px);
+
+z-index:10000;
+
+}
+
+/* prompt modal */
+
+.nira-viewer-prompt-box{
+
+max-width:480px;
+
+padding:26px;
+
+border-radius:16px;
+
+background:rgba(18,22,30,.85);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.65);
+
+color:white;
+
+}
+
+/* prompt text */
+
+.nira-viewer-prompt-text{
+
+margin-top:12px;
+
+font-size:14px;
+line-height:1.7;
+
+opacity:.9;
+
+}
+
+/* delete modal */
+
+.nira-viewer-delete-overlay{
+
+position:fixed;
+inset:0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(12px);
+
+z-index:10000;
+
+}
+
+.nira-viewer-delete-box{
+
+padding:28px;
+
+border-radius:16px;
+
+background:rgba(18,22,30,.85);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 40px 120px rgba(0,0,0,.65);
+
+color:white;
+
+text-align:center;
+
+}
+
+/* delete buttons */
+
+.nira-delete-actions{
+
+margin-top:18px;
+
+display:flex;
+gap:10px;
+justify-content:center;
+
+}
+
+.nira-delete-actions button{
+
+padding:10px 16px;
+
+border-radius:8px;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+.nira-delete-actions .delete{
+
+background:#ff4d4f;
+color:white;
+
+}
+
+.nira-delete-actions .delete:hover{
+
+background:#ff2f2f;
+
+}
+
+.nira-viewer-prompt-text{
+
+max-height:220px;
+
+overflow-y:auto;
+
+padding-right:6px;
+
+line-height:1.6;
+
+opacity:.9;
+
+}
+
+.nira-viewer-prompt-box{
+
+max-width:520px;
+
+width:90%;
+
+padding:28px;
+
+border-radius:16px;
+
+background:rgba(18,22,30,.85);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 40px 120px rgba(0,0,0,.65);
+
+color:white;
+
+}
+
+
+/* ===================================== */
+/* NIRA PREMIUM IMAGE CARD FIX */
+/* ===================================== */
+
+/* card */
+
+.nira-card{
+
+position:relative;
+
+border-radius:20px;
+
+overflow:hidden;
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.02)
+);
+
+border:1px solid rgba(255,255,255,.06);
+
+box-shadow:
+0 12px 40px rgba(0,0,0,.55),
+inset 0 0 0 1px rgba(255,255,255,.02);
+
+transition:
+transform .25s ease,
+box-shadow .25s ease;
+
+}
+
+/* hover lift */
+
+.nira-card:hover{
+
+transform:translateY(-6px) scale(1.02);
+
+box-shadow:
+0 20px 70px rgba(0,0,0,.7);
+
+}
+
+/* image */
+
+.nira-card-img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+transition:transform .35s ease;
+
+}
+
+.nira-card:hover .nira-card-img{
+
+transform:scale(1.05);
+
+}
+
+/* tool capsule */
+
+.nira-tools{
+
+position:absolute;
+
+top:12px;
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+gap:8px;
+
+padding:8px 10px;
+
+background:rgba(0,0,0,.45);
+
+backdrop-filter:blur(16px);
+
+border-radius:14px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 8px 25px rgba(0,0,0,.4);
+
+}
+
+/* tool buttons */
+
+.nira-tool-btn{
+
+width:34px;
+height:34px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:8px;
+
+background:rgba(255,255,255,.04);
+
+border:none;
+
+color:white;
+
+cursor:pointer;
+
+transition:all .18s ease;
+
+}
+
+.nira-tool-btn:hover{
+
+background:rgba(255,255,255,.12);
+
+transform:translateY(-2px);
+
+}
+
+/* ratios */
+
+.ratio-square{
+
+aspect-ratio:1/1;
+
+}
+
+.ratio-landscape{
+
+aspect-ratio:16/9;
+
+}
+
+.ratio-portrait{
+
+aspect-ratio:9/16;
+
+}
+
+/* ================================= */
+/* CARD PROMPT MODAL FIX */
+/* ================================= */
+
+.nira-card-prompt-overlay{
+
+backdrop-filter: blur(10px);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+.nira-card-prompt-box{
+
+width:420px;
+max-width:90%;
+
+padding:28px;
+
+border-radius:16px;
+
+background:rgba(18,22,30,.85);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.65),
+inset 0 0 0 1px rgba(255,255,255,.04);
+
+}
+
+.nira-card-prompt-box h3{
+
+font-size:18px;
+margin-bottom:14px;
+
+}
+
+.nira-card-prompt-box p{
+
+font-size:14px;
+line-height:1.6;
+
+color:rgba(255,255,255,.85);
+
+margin-bottom:20px;
+
+}
+
+/* =============================== */
+/* CARD PROMPT MODAL IMPROVEMENT */
+/* =============================== */
+
+.nira-viewer-prompt-box{
+
+width:520px;
+max-width:90%;
+
+padding:32px;
+
+border-radius:18px;
+
+background:rgba(18,22,30,.9);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.65),
+inset 0 0 0 1px rgba(255,255,255,.04);
+
+}
+
+.nira-prompt-hint{
+
+margin-top:6px;
+margin-bottom:16px;
+
+font-size:13px;
+
+color:rgba(255,255,255,.55);
+
+line-height:1.5;
+
+}
+
+/* =============================== */
+/* CARD PROMPT SCROLL FIX */
+/* =============================== */
+
+.nira-viewer-prompt-box{
+
+width:540px;
+max-width:90%;
+
+padding:30px;
+
+border-radius:18px;
+
+background:rgba(18,22,30,.92);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.65),
+inset 0 0 0 1px rgba(255,255,255,.04);
+
+}
+
+/* PROMPT TEXT BOX */
+
+.nira-viewer-prompt-text{
+
+margin-top:14px;
+
+padding:16px;
+
+border-radius:12px;
+
+background:rgba(0,0,0,.35);
+
+border:1px solid rgba(255,255,255,.08);
+
+font-size:14px;
+
+line-height:1.6;
+
+color:rgba(255,255,255,.85);
+
+max-height:180px;
+
+overflow-y:auto;
+
+}
+
+/* SCROLLBAR */
+
+.nira-viewer-prompt-text::-webkit-scrollbar{
+
+width:6px;
+
+}
+
+.nira-viewer-prompt-text::-webkit-scrollbar-thumb{
+
+background:rgba(255,255,255,.25);
+
+border-radius:6px;
+
+}
+
+.nira-viewer-prompt-text::-webkit-scrollbar-track{
+
+background:transparent;
+
+}
+
+/* ===================================== */
+/* NIRA INTELLIGENT HINT CAPSULE */
+/* ===================================== */
+
+.nira-prompt-hint-highlight{
+
+position:relative;
+
+margin-top:10px;
+margin-bottom:18px;
+
+padding:12px 16px;
+
+font-size:13px;
+line-height:1.6;
+
+border-radius:12px;
+
+background:linear-gradient(
+180deg,
+rgba(35,60,110,.18),
+rgba(20,35,70,.15)
+);
+
+border:1px solid rgba(120,160,255,.28);
+
+color:rgba(220,235,255,.92);
+
+font-weight:500;
+
+backdrop-filter:blur(6px);
+
+}
+
+/* soft glow */
+
+.nira-prompt-hint-highlight::before{
+
+content:"";
+
+position:absolute;
+
+inset:-1px;
+
+border-radius:12px;
+
+background:linear-gradient(
+120deg,
+rgba(120,180,255,.35),
+rgba(120,255,220,.18),
+rgba(120,180,255,.35)
+);
+
+opacity:.25;
+
+filter:blur(8px);
+
+z-index:-1;
+
+}
+
+/* subtle hover life */
+
+.nira-prompt-hint-highlight:hover{
+
+transform:translateY(-1px);
+
+border-color:rgba(140,180,255,.45);
+
+transition:.25s ease;
+
+}
+
+.nira-prompt-editor:focus{
+
+border:1px solid rgba(120,160,255,.6);
+
+box-shadow:
+0 0 0 2px rgba(120,160,255,.15),
+0 10px 30px rgba(0,0,0,.4);
+
+}
+
+/* ========================================= */
+/* NIRA FINAL VISIBILITY + APPLE LEVEL POLISH */
+/* ========================================= */
+
+/* smoother fonts */
+
+body{
+
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+
+}
+
+/* glass containers */
+
+.nira-card,
+.nira-viewer-prompt-box,
+.nira-viewer-delete-box{
+
+background:rgba(18,22,30,.92);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.75),
+inset 0 0 0 1px rgba(255,255,255,.03);
+
+}
+
+/* image cards visibility */
+
+.nira-card{
+
+transition:transform .25s ease, box-shadow .25s ease;
+
+}
+
+.nira-card:hover{
+
+transform:translateY(-4px) scale(1.02);
+
+box-shadow:
+0 30px 90px rgba(0,0,0,.7);
+
+}
+
+/* toolbar capsule */
+
+.nira-tools{
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(14px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 10px 35px rgba(0,0,0,.5);
+
+}
+
+/* toolbar buttons */
+
+.nira-tool-btn{
+
+background:rgba(255,255,255,.05);
+
+border-radius:8px;
+
+transition:.2s ease;
+
+}
+
+.nira-tool-btn:hover{
+
+background:rgba(255,255,255,.12);
+
+transform:translateY(-1px);
+
+}
+
+/* viewer image */
+
+.nira-viewer-img{
+
+transition:transform .25s ease;
+
+}
+
+/* prompt editor */
+
+.nira-prompt-editor{
+
+background:rgba(0,0,0,.35);
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+}
+
+/* focus glow */
+
+.nira-prompt-editor:focus{
+
+border:1px solid rgba(120,160,255,.6);
+
+box-shadow:
+0 0 0 2px rgba(120,160,255,.15),
+0 10px 30px rgba(0,0,0,.4);
+
+}
+
+/* scrollbar polish */
+
+::-webkit-scrollbar{
+width:6px;
+height:6px;
+}
+
+::-webkit-scrollbar-thumb{
+
+background:rgba(255,255,255,.25);
+
+border-radius:6px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:transparent;
+
+}
+
+/* buttons */
+
+button{
+
+transition:.2s ease;
+
+}
+
+button:hover{
+
+transform:translateY(-1px);
+
+}
+
+/* modal animation */
+
+.nira-viewer-prompt-box,
+.nira-viewer-delete-box{
+
+animation:niraModalFade .25s ease;
+
+}
+
+@keyframes niraModalFade{
+
+from{
+opacity:0;
+transform:scale(.96);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}

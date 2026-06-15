@@ -1,0 +1,309 @@
+/* ============================= */
+/* NIRA IMAGE VIEWER ROOT */
+/* ============================= */
+
+.nira-preview-root {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.96);
+    z-index: 999999;
+    padding: 32px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* ============================= */
+/* IMAGE STAGE */
+/* ============================= */
+
+.nira-preview-stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 92vw;
+    max-height: 88vh;
+    margin: auto;
+}
+
+/* ============================= */
+/* IMAGE */
+/* ============================= */
+
+.nira-preview-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 34px 120px rgba(0,0,0,.78);
+    display: block;
+}
+
+/* ============================= */
+/* CLOSE BUTTON */
+/* ============================= */
+
+.nira-preview-close {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(24,24,24,.7);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    cursor: pointer;
+    color: white;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    transition: .18s ease;
+}
+
+.nira-preview-close:hover {
+    background: rgba(36,36,36,.85);
+    transform: scale(1.04);
+}
+
+/* ============================= */
+/* NAVIGATION */
+/* ============================= */
+
+.nira-preview-prev,
+.nira-preview-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+    background: rgba(24,24,24,.65);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    cursor: pointer;
+    z-index: 30;
+    backdrop-filter: blur(10px);
+    transition: .18s ease;
+}
+
+.nira-preview-prev {
+    left: 20px;
+}
+
+.nira-preview-next {
+    right: 20px;
+}
+
+.nira-preview-prev:hover,
+.nira-preview-next:hover {
+    background: rgba(36,36,36,.85);
+    transform: translateY(-50%) scale(1.04);
+}
+
+/* ============================= */
+/* TOOLBAR */
+/* ============================= */
+
+.nira-preview-toolbar {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    padding: 12px 18px;
+    background: rgba(18,18,18,.55);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 12px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+    z-index: 40;
+}
+
+/* ============================= */
+/* TOOL BUTTON */
+/* ============================= */
+
+.nira-preview-btn {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px;
+    cursor: pointer;
+    color: white;
+    transition: .18s ease;
+}
+
+.nira-preview-btn:hover {
+    background: rgba(255,255,255,.18);
+    transform: translateY(-1px);
+}
+
+/* ============================= */
+/* ICON */
+/* ============================= */
+
+.nira-preview-btn svg,
+.nira-preview-close svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
+    color: rgba(255,255,255,.95);
+}
+
+/* ============================= */
+/* MOBILE RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 768px) {
+    .nira-preview-root {
+        padding: 16px;
+    }
+    
+    .nira-preview-stage {
+        max-width: 96vw;
+        max-height: 82vh;
+    }
+    
+    .nira-preview-toolbar {
+        bottom: 18px;
+        gap: 10px;
+        padding: 10px 14px;
+    }
+    
+    .nira-preview-btn {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .nira-preview-prev,
+    .nira-preview-next {
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
+    }
+}
+
+/* ========================================= */
+/* NIRA FINAL VISIBILITY + APPLE LEVEL POLISH */
+/* ========================================= */
+
+/* smoother fonts */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* glass containers */
+.nira-card,
+.nira-viewer-prompt-box,
+.nira-viewer-delete-box {
+    background: rgba(18,22,30,.92);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 40px 120px rgba(0,0,0,.75), inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+/* image cards visibility */
+.nira-card {
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.nira-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 30px 90px rgba(0,0,0,.7);
+}
+
+/* toolbar capsule */
+.nira-tools {
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 10px 35px rgba(0,0,0,.5);
+}
+
+/* toolbar buttons */
+.nira-tool-btn {
+    background: rgba(255,255,255,.05);
+    border-radius: 8px;
+    transition: .2s ease;
+}
+
+.nira-tool-btn:hover {
+    background: rgba(255,255,255,.12);
+    transform: translateY(-1px);
+}
+
+/* viewer image */
+.nira-viewer-img {
+    transition: transform .25s ease;
+}
+
+/* prompt editor */
+.nira-prompt-editor {
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.08);
+    color: white;
+}
+
+/* focus glow */
+.nira-prompt-editor:focus {
+    border: 1px solid rgba(120,160,255,.6);
+    box-shadow: 0 0 0 2px rgba(120,160,255,.15), 0 10px 30px rgba(0,0,0,.4);
+}
+
+/* scrollbar polish */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.25);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* buttons */
+button {
+    transition: .2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+/* modal animation */
+.nira-viewer-prompt-box,
+.nira-viewer-delete-box {
+    animation: niraModalFade .25s ease;
+}
+
+@keyframes niraModalFade {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
