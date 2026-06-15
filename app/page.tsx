@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, useScroll, useTransform } from "framer-motion";
 import PremiumReviews from "./components/PremiumReviews";
 import NiraOrbLogo from "./components/NiraOrbLogo";
 import { playUISound } from "@/lib/audioEngine";
@@ -9,7 +10,6 @@ import { smoothScrollTo } from "@/lib/scrollUtils";
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mainRef = useRef<HTMLElement>(null);
   const router = useRouter();
   const [leaving, setLeaving] = useState(false);
   const [logoActive, setLogoActive] = useState(false);
@@ -19,6 +19,57 @@ export default function Home() {
 
   // Audio for UI interactions using unified local synthesizer
   const uiSound = playUISound;
+
+  // Scroll tracking for Apple-style dynamic parallax & fades
+  const { scrollY } = useScroll();
+
+  // Scroll speed offsets for true layered depth:
+  // Background particles scroll at 0.1x speed (positive value translates down relative to normal upward scroll)
+  const bgY = useTransform(scrollY, [0, 500], [0, -50]);
+  // Logo scrolls at 0.15x speed
+  const logoY = useTransform(scrollY, [0, 500], [0, -75]);
+  // Headline layer (Title, pill, tagline, paragraph) scrolls at 0.25x speed
+  const headlineY = useTransform(scrollY, [0, 500], [0, -125]);
+  // CTA layer (Buttons, pills, footer note) scrolls at 0.35x speed
+  const ctaY = useTransform(scrollY, [0, 500], [0, -175]);
+
+  // Background particles fade gradually from 1.0 -> 0.25
+  const bgOpacity = useTransform(scrollY, [0, 600], [1.0, 0.25]);
+
+  // Hero section scale: subtle 1.0 -> 0.96 (premium and elegant)
+  const heroScale = useTransform(scrollY, [0, 500], [1.0, 0.96]);
+
+  // Hero opacity: smooth fade-out from 1.0 -> 0.0 over 450px of scroll
+  const heroOpacity = useTransform(scrollY, [0, 450], [1.0, 0.0]);
+
+  // Hero blur: subtle defocus from 0px -> maximum 3px
+  const blurVal = useTransform(scrollY, [0, 400], [0, 3]);
+  const heroBlur = useTransform(blurVal, (v) => `blur(${v}px)`);
+
+  // Staggered entrance reveal variants (Apple ease-out)
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 1.1,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -180,12 +231,35 @@ export default function Home() {
         </div>
       </div>
 
-      <canvas ref={canvasRef} className={`fixed inset-0 z-0 pointer-events-none transition-all duration-700 ${leaving ? "scale-110 opacity-0 blur-xl" : "opacity-100"}`} />
+      <motion.canvas 
+        ref={canvasRef} 
+        style={{
+          y: bgY,
+          opacity: leaving ? 0 : bgOpacity,
+          scale: leaving ? 1.1 : 1.0,
+          filter: leaving ? "blur(20px)" : "blur(0px)",
+          transition: leaving ? "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)" : "none"
+        }}
+        className="fixed inset-0 z-0 pointer-events-none" 
+      />
       
-      <div className={`relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 md:px-8 pt-12 pb-24 md:pt-20 md:pb-36 text-center transition-all duration-700 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        style={{
+          opacity: leaving ? 0 : heroOpacity,
+          scale: leaving ? 0.95 : heroScale,
+          filter: leaving ? "blur(10px)" : heroBlur,
+          transition: leaving ? "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)" : "none"
+        }}
+        className="relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 md:px-8 pt-12 pb-24 md:pt-20 md:pb-36 text-center"
+      >
         
         {/* NIRA Official Logo */}
-        <div
+        <motion.div
+          variants={itemVariants}
+          style={{ y: logoY }}
           onMouseEnter={() => uiSound("hover")}
           onClick={() => {
             uiSound("click");
@@ -211,10 +285,14 @@ export default function Home() {
               <ellipse cx="100" cy="100" rx="35" ry="80" transform="rotate(-60 100 100)" />
             </g>
           </svg>
-        </div>
+        </motion.div>
 
         {/* NIRA Text & Subtitle */}
-        <div className="flex flex-col items-center mt-3 md:mt-6">
+        <motion.div 
+          variants={itemVariants}
+          style={{ y: headlineY }}
+          className="flex flex-col items-center mt-3 md:mt-6"
+        >
           <h1 
             className="text-[36px] sm:text-[56px] md:text-[80px] font-[700] leading-[1] tracking-[0.3em] md:tracking-[0.35em] text-white font-sans drop-shadow-none pl-[0.3em] md:pl-[0.35em] mix-blend-normal"
             style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", textShadow: "none" }}
@@ -227,28 +305,46 @@ export default function Home() {
           >
             Intelligence
           </div>
-        </div>
+        </motion.div>
 
         {/* Punchy Highlight */}
-        <div className="mt-8 md:mt-16 flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-white/[0.015] border border-white/[0.06] backdrop-blur-md mb-4 md:mb-6 shadow-[0_0_15px_rgba(255,255,255,0.01)]">
+        <motion.div 
+          variants={itemVariants}
+          style={{ y: headlineY }}
+          className="mt-8 md:mt-16 flex flex-col items-center"
+        >
+          <motion.div 
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-white/[0.015] border border-white/[0.06] backdrop-blur-md mb-4 md:mb-6 shadow-[0_0_15px_rgba(255,255,255,0.01)]"
+          >
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             <span className="text-[9px] sm:text-[10px] md:text-[11px] font-[600] text-zinc-300 tracking-[0.2em] uppercase">Neural Intelligence & Responsive Assistant</span>
-          </div>
+          </motion.div>
           
-          <h2 className="text-[22px] sm:text-[38px] md:text-[52px] font-[800] tracking-[-0.03em] font-[var(--font-display)] text-center leading-[1.2] md:leading-[1.1] max-w-[95%] md:max-w-4xl text-white">
+          <motion.h2 
+            variants={itemVariants}
+            className="text-[22px] sm:text-[38px] md:text-[52px] font-[800] tracking-[-0.03em] font-[var(--font-display)] text-center leading-[1.2] md:leading-[1.1] max-w-[95%] md:max-w-4xl text-white"
+          >
             <span>One request. </span>
             <span className="text-white/30">Multiple intelligences.</span> <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-amber-200 to-rose-500">The best possible answer.</span>
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
-        <p className="mt-4 md:mt-8 max-w-[85%] sm:max-w-2xl text-[14px] sm:text-[16px] md:text-[18px] leading-[1.6] tracking-[-0.01em] font-sans antialiased text-zinc-300 mix-blend-normal">
+        <motion.p 
+          variants={itemVariants}
+          style={{ y: headlineY }}
+          className="mt-4 md:mt-8 max-w-[85%] sm:max-w-2xl text-[14px] sm:text-[16px] md:text-[18px] leading-[1.6] tracking-[-0.01em] font-sans antialiased text-zinc-300 mix-blend-normal"
+        >
           NIRA integrates the world's most powerful AI models, dynamically routing your request to the perfect engine to deliver unprecedented speed and precision across text, images, and video.
-        </p>
+        </motion.p>
 
         {/* Pills */}
-        <div className="mt-6 md:mt-10 w-full overflow-hidden relative">
+        <motion.div 
+          variants={itemVariants}
+          style={{ y: ctaY }}
+          className="mt-6 md:mt-10 w-full overflow-hidden relative"
+        >
           <div className="absolute left-0 top-0 bottom-0 w-8 md:hidden bg-gradient-to-r from-black via-black/50 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-8 md:hidden bg-gradient-to-l from-black via-black/50 to-transparent z-10 pointer-events-none" />
           <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory items-center justify-start md:justify-center px-6 md:px-0 gap-3 pb-4 pt-2 -mb-4">
@@ -300,10 +396,14 @@ export default function Home() {
               </span>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Action Buttons */}
-        <div className="mt-8 md:mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-6 max-w-[320px] sm:max-w-none mx-auto">
+        <motion.div 
+          variants={itemVariants}
+          style={{ y: ctaY }}
+          className="mt-8 md:mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-6 max-w-[320px] sm:max-w-none mx-auto"
+        >
           <button
             onMouseEnter={() => { uiSound("hover"); router.prefetch("/login"); }}
             onClick={() => { uiSound("enter"); setLeaving(true); router.push("/login"); }}
@@ -331,11 +431,15 @@ export default function Home() {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
-        </div>
+        </motion.div>
 
-        <p className="mt-6 md:mt-10 mb-0 text-[11px] md:text-[12px] text-zinc-600 tracking-[0.04em] uppercase font-[500] antialiased">
+        <motion.p 
+          variants={itemVariants}
+          style={{ y: ctaY }}
+          className="mt-6 md:mt-10 mb-0 text-[11px] md:text-[12px] text-zinc-600 tracking-[0.04em] uppercase font-[500] antialiased"
+        >
           Built for creators, teams & AI-first companies
-        </p>
+        </motion.p>
 
         {/* Premium Bottom Navigation Dock (Fixed, fades out on scroll) */}
         <div 
@@ -380,7 +484,7 @@ export default function Home() {
           </div>
         </div>
 
-      </div>
+      </motion.div>
 
       <div className={`relative z-10 w-full flex flex-col transition-all duration-1000 delay-300 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
         <PremiumReviews />

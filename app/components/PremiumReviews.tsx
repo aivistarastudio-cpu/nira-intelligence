@@ -23,13 +23,17 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40, filter: "blur(10px)", scale: 0.95 },
+  hidden: { opacity: 0, y: 30, filter: "blur(6px)", scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
     scale: 1,
-    transition: premiumTransition,
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 18,
+    },
   },
 };
 
@@ -89,7 +93,7 @@ function ReviewCard({
     <motion.div
       layout
       variants={cardVariants}
-      initial={isNew ? { opacity: 0, scale: 0.9, x: -50, filter: "blur(10px)" } : (showAll ? { opacity: 0, scale: 0.98 } : undefined)}
+      initial={isNew ? { opacity: 0, scale: 0.9, x: -50, filter: "blur(6px)" } : (showAll ? { opacity: 0, scale: 0.98 } : undefined)}
       animate={{ 
         opacity: isOtherHovered ? 0.35 : 1, 
         scale: isHovered ? 1.02 : isOtherHovered ? 0.96 : 1, 
@@ -98,7 +102,14 @@ function ReviewCard({
         zIndex: isHovered ? 50 : 10
       }}
       exit={{ opacity: 0, scale: 0.9, filter: "none" }}
-      transition={{ ...premiumTransition, delay: index * 0.05 }}
+      transition={{
+        type: "spring",
+        stiffness: 90,
+        damping: 18,
+        delay: index * 0.05,
+        opacity: { type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.8 },
+        filter: { type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.8 },
+      }}
       style={{
         rotateX,
         rotateY,
@@ -414,18 +425,18 @@ export default function PremiumReviews() {
       />
 
       <motion.div 
-        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        initial={{ opacity: 0, y: 30, filter: "blur(6px)", scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={premiumTransition}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
         className="flex flex-col items-center justify-center mb-16 md:mb-24 text-center px-6 relative z-10"
       >
         <h2 className="text-3xl sm:text-4xl md:text-[52px] font-[700] tracking-[-0.03em] text-white leading-tight transition-all duration-1000 font-sans"
-            style={{ opacity: hoveredCardId ? 0.3 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)" }}>
+            style={{ opacity: hoveredCardId ? 0.3 : 1, filter: hoveredCardId ? "blur(2px)" : "blur(0px)" }}>
           Loved by pioneers.
         </h2>
         <p className="mt-3 md:mt-4 text-[15px] sm:text-[17px] text-zinc-400 max-w-2xl font-normal leading-relaxed tracking-tight transition-all duration-1000"
-           style={{ opacity: hoveredCardId ? 0.1 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)" }}>
+           style={{ opacity: hoveredCardId ? 0.1 : 1, filter: hoveredCardId ? "blur(2px)" : "blur(0px)" }}>
           Join thousands of researchers, educators, and teams building the future with NIRA Intelligence.
         </p>
       </motion.div>
@@ -540,12 +551,12 @@ export default function PremiumReviews() {
       {/* Ultra-Premium Review Submission Form */}
       <motion.div 
         layout
-        initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        initial={{ opacity: 0, y: 30, filter: "blur(6px)", scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
         viewport={{ once: true }}
-        transition={{ ...premiumTransition, delay: 0.2 }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         className="mt-20 md:mt-32 w-full max-w-2xl mx-auto px-6 relative z-10 transition-all duration-1000"
-        style={{ opacity: hoveredCardId ? 0.2 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)" }}
+        style={{ opacity: hoveredCardId ? 0.2 : 1, filter: hoveredCardId ? "blur(2px)" : "blur(0px)" }}
       >
         <div className="relative p-1 rounded-[36px] bg-gradient-to-b from-white/[0.08] to-transparent shadow-[0_0_50px_rgba(0,0,0,0.5)] group overflow-hidden">
           
