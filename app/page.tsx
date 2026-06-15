@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import PremiumReviews from "./components/PremiumReviews";
-import NiraOrbLogo from "./components/NiraOrbLogo";
+
 import { playUISound } from "@/lib/audioEngine";
 import { smoothScrollTo } from "@/lib/scrollUtils";
 
@@ -12,7 +12,6 @@ export default function Home() {
   const router = useRouter();
   const [leaving, setLeaving] = useState(false);
   const [logoActive, setLogoActive] = useState(false);
-  const [pulse, setPulse] = useState(false);
   const [activeSection, setActiveSection] = useState<"hero" | "reviews">("hero");
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -189,10 +188,8 @@ export default function Home() {
           onClick={() => {
             uiSound("click");
             setLogoActive(true);
-            setPulse(true);
             setTimeout(() => {
               setLogoActive(false);
-              setPulse(false);
             }, 400);
           }}
           className={`relative flex h-[44px] w-[44px] sm:h-[52px] sm:w-[52px] md:h-[68px] md:w-[68px] items-center justify-center rounded-[12px] sm:rounded-[16px] md:rounded-[20px] border border-white/[0.08] bg-white/[0.02] backdrop-blur-2xl transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${logoActive ? "scale-[0.96] opacity-80" : "scale-100"}`}
@@ -243,7 +240,7 @@ export default function Home() {
         </div>
 
         <p className="mt-4 md:mt-8 max-w-[85%] sm:max-w-2xl text-[14px] sm:text-[16px] md:text-[18px] leading-[1.6] tracking-[-0.01em] font-sans antialiased text-zinc-300 mix-blend-normal">
-          NIRA integrates the world's most powerful AI models, dynamically routing your request to the perfect engine to deliver unprecedented speed and precision across text, images, and video.
+          NIRA integrates the world&apos;s most powerful AI models, dynamically routing your request to the perfect engine to deliver unprecedented speed and precision across text, images, and video.
         </p>
 
         {/* Pills */}

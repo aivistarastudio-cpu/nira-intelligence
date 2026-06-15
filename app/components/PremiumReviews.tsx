@@ -1,26 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { fetchApprovedReviews, submitReview } from "@/app/actions/reviewActions";
 import { smoothScrollTo } from "@/lib/scrollUtils";
 
-const initialReviews: any[] = [];
+const initialReviews: { id: number; name: string; role: string; review: string; avatar: string }[] = [];
 
 // Unified Premium Easing (Apple-like slow, buttery glide)
 const premiumEasing = [0.16, 1, 0.3, 1];
 const premiumTransition = { duration: 1.2, ease: premiumEasing }; // Increased duration for cinematic feel
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30, filter: "blur(6px)", scale: 0.98 },
@@ -46,7 +36,7 @@ function ReviewCard({
   hoveredCardId, 
   setHoveredCardId 
 }: { 
-  review: any, 
+  review: { id: number; name: string; role: string; review: string; avatar: string }, 
   index: number, 
   showAll: boolean, 
   isNew: boolean,
@@ -266,7 +256,7 @@ export default function PremiumReviews() {
     let h = canvas.parentElement?.offsetHeight || window.innerHeight;
     
     const mouse = { x: -9999, y: -9999 };
-    let nodes: any[] = [];
+    let nodes: { x: number; y: number; vx: number; vy: number }[] = [];
 
     function createNodes() {
       const nodeCount = window.innerWidth < 768 ? 40 : 70;
