@@ -2,7 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import PremiumReviews from "./components/PremiumReviews";
+import dynamic from "next/dynamic";
+
+const PremiumReviews = dynamic(() => import("./components/PremiumReviews"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-96 items-center justify-center text-zinc-500 font-sans tracking-[0.04em]">
+      Loading Stories...
+    </div>
+  )
+});
 
 import { playUISound } from "@/lib/audioEngine";
 import { smoothScrollTo } from "@/lib/scrollUtils";
@@ -50,7 +59,7 @@ export default function Home() {
     
     const resize = () => {
       isMobile = window.innerWidth < 768;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
@@ -59,8 +68,7 @@ export default function Home() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       particles = [];
-      // Ultra-premium aesthetic: fewer particles mean less clutter and a more elegant, focused design
-      const particleCount = isMobile ? 15 : 35;
+      const particleCount = isMobile ? 10 : 35;
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * window.innerWidth,
@@ -100,22 +108,38 @@ export default function Home() {
     window.addEventListener("touchend", onPointerLeave);
 
     let animationFrameId: number;
-    const draw = () => {
+    let lastTime = 0;
+    const fpsInterval = 1000 / 30; // 30 FPS throttle on mobile
+
+    const draw = (timestamp: number) => {
+      animationFrameId = requestAnimationFrame(draw);
+      
+      if (isMobile && timestamp) {
+        const elapsed = timestamp - lastTime;
+        if (elapsed < fpsInterval) return;
+        lastTime = timestamp - (elapsed % fpsInterval);
+      }
+      
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       
+      const repelRadius = isMobile ? 80 : 180;
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         
         const dxm = p.x - pointer.x;
         const dym = p.y - pointer.y;
-        const distPointer = Math.sqrt(dxm * dxm + dym * dym);
-
-        // Buttery smooth magnetic repulsion
-        const repelRadius = isMobile ? 100 : 180;
-        if (distPointer < repelRadius && distPointer > 0.1) {
-          const force = Math.pow((repelRadius - distPointer) / repelRadius, 1.5);
-          p.vx += (dxm / distPointer) * force * 0.6;
-          p.vy += (dym / distPointer) * force * 0.6;
+        
+        let currentSize = p.size;
+        
+        // Bounding box filter check
+        if (Math.abs(dxm) < repelRadius && Math.abs(dym) < repelRadius) {
+          const distPointer = Math.sqrt(dxm * dxm + dym * dym);
+          if (distPointer < repelRadius && distPointer > 0.1) {
+            const force = Math.pow((repelRadius - distPointer) / repelRadius, 1.5);
+            p.vx += (dxm / distPointer) * force * 0.6;
+            p.vy += (dym / distPointer) * force * 0.6;
+            currentSize += 0.6;
+          }
         }
 
         // Apply velocities
@@ -135,13 +159,11 @@ export default function Home() {
         // Draw ultra-sharp premium node
         ctx.fillStyle = "rgba(120, 170, 255, 0.5)";
         ctx.beginPath();
-        const currentSize = p.size + (distPointer < repelRadius ? 0.6 : 0);
         ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
         ctx.fill();
       }
-      animationFrameId = requestAnimationFrame(draw);
     };
-    draw();
+    draw(0);
 
     return () => {
       window.removeEventListener("resize", resize);
@@ -192,7 +214,7 @@ export default function Home() {
               setLogoActive(false);
             }, 400);
           }}
-          className={`relative flex h-[44px] w-[44px] sm:h-[52px] sm:w-[52px] md:h-[68px] md:w-[68px] items-center justify-center rounded-[12px] sm:rounded-[16px] md:rounded-[20px] border border-white/[0.08] bg-white/[0.02] backdrop-blur-2xl transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${logoActive ? "scale-[0.96] opacity-80" : "scale-100"}`}
+          className={`relative flex h-[44px] w-[44px] sm:h-[52px] sm:w-[52px] md:h-[68px] md:w-[68px] items-center justify-center rounded-[12px] sm:rounded-[16px] md:rounded-[20px] border border-white/[0.08] bg-zinc-950/90 md:bg-white/[0.02] backdrop-blur-none md:backdrop-blur-2xl transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${logoActive ? "scale-[0.96] opacity-80" : "scale-100"}`}
         >
           <svg 
             viewBox="0 0 200 200" 
@@ -227,7 +249,7 @@ export default function Home() {
 
         {/* Punchy Highlight */}
         <div className="mt-8 md:mt-16 flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-white/[0.015] border border-white/[0.06] backdrop-blur-md mb-4 md:mb-6 shadow-[0_0_15px_rgba(255,255,255,0.01)]">
+          <div className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-zinc-900/90 md:bg-white/[0.015] border border-white/[0.06] backdrop-blur-none md:backdrop-blur-md mb-4 md:mb-6 shadow-[0_0_15px_rgba(255,255,255,0.01)]">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             <span className="text-[9px] sm:text-[10px] md:text-[11px] font-[600] text-zinc-300 tracking-[0.2em] uppercase">Neural Intelligence & Responsive Assistant</span>
           </div>
@@ -289,7 +311,7 @@ export default function Home() {
               <span 
                 key={m.name} 
                 onMouseEnter={() => uiSound("hover")}
-                className="group snap-center shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-[500] tracking-[0.03em] text-white/50 border border-white/[0.04] bg-white/[0.01] backdrop-blur-xl transform-gpu transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.1] hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] active:scale-[0.98] active:opacity-80 cursor-pointer"
+                className="group snap-center shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-[500] tracking-[0.03em] text-white/50 border border-white/[0.04] bg-zinc-900/80 md:bg-white/[0.01] backdrop-blur-none md:backdrop-blur-xl transform-gpu transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.1] hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] active:scale-[0.98] active:opacity-80 cursor-pointer"
               >
                 {m.icon}
                 <span className="antialiased">{m.name}</span>
@@ -303,7 +325,7 @@ export default function Home() {
           <button
             onMouseEnter={() => { uiSound("hover"); router.prefetch("/login"); }}
             onClick={() => { uiSound("enter"); setLeaving(true); router.push("/login"); }}
-            className="group relative overflow-hidden flex items-center justify-center w-full sm:w-[220px] h-[52px] md:h-[58px] rounded-full text-[15px] md:text-[16px] font-[600] tracking-tight text-white bg-[#0D0D10]/80 backdrop-blur-2xl border border-white/[0.12] shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#161619]/90 hover:border-white/[0.2] hover:shadow-[0_0_20px_rgba(255,255,255,0.04)] hover:scale-[1.02] active:scale-[0.94] active:bg-[#161619] active:duration-75"
+            className="group relative overflow-hidden flex items-center justify-center w-full sm:w-[220px] h-[52px] md:h-[58px] rounded-full text-[15px] md:text-[16px] font-[600] tracking-tight text-white bg-[#0D0D10]/95 md:bg-[#0D0D10]/80 backdrop-blur-none md:backdrop-blur-2xl border border-white/[0.12] shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#161619]/90 hover:border-white/[0.2] hover:shadow-[0_0_20px_rgba(255,255,255,0.04)] hover:scale-[1.02] active:scale-[0.94] active:bg-[#161619] active:duration-75"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent translate-x-[-100%] md:group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
@@ -318,7 +340,7 @@ export default function Home() {
               }
               window.open("/nira", "_blank", "noopener,noreferrer");
             }}
-            className="group relative overflow-hidden flex items-center justify-center gap-2.5 w-full sm:w-[220px] h-[52px] md:h-[58px] rounded-full text-[15px] md:text-[16px] font-[600] tracking-tight text-zinc-400 bg-white/[0.015] backdrop-blur-2xl border border-white/[0.06] shadow-[0_4px_16px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.12] hover:scale-[1.02] active:scale-[0.94] active:bg-white/[0.06] active:duration-75"
+            className="group relative overflow-hidden flex items-center justify-center gap-2.5 w-full sm:w-[220px] h-[52px] md:h-[58px] rounded-full text-[15px] md:text-[16px] font-[600] tracking-tight text-zinc-400 bg-zinc-900/90 md:bg-white/[0.015] backdrop-blur-none md:backdrop-blur-2xl border border-white/[0.06] shadow-[0_4px_16px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.12] hover:scale-[1.02] active:scale-[0.94] active:bg-white/[0.06] active:duration-75"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent translate-x-[-100%] md:group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
@@ -341,7 +363,7 @@ export default function Home() {
               : "opacity-100 translate-y-0 scale-100"
           }`}
         >
-          <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/70 backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
+          <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/95 md:bg-[#0D0D10]/70 backdrop-blur-none md:backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
             <button
               onClick={() => {
                 uiSound("click");
@@ -388,7 +410,7 @@ export default function Home() {
           uiSound("click");
           smoothScrollTo(0, 850);
         }}
-        className={`fixed bottom-6 right-6 md:bottom-8 md:right-10 z-55 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0D0D10]/80 backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-zinc-400 hover:text-white hover:scale-[1.05] active:scale-[0.92] hover:border-white/[0.15] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
+        className={`fixed bottom-6 right-6 md:bottom-8 md:right-10 z-55 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0D0D10]/95 md:bg-[#0D0D10]/80 backdrop-blur-none md:backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-zinc-400 hover:text-white hover:scale-[1.05] active:scale-[0.92] hover:border-white/[0.15] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
           isScrolled 
             ? "opacity-100 translate-y-0 scale-100 pointer-events-auto" 
             : "opacity-0 translate-y-4 scale-75 pointer-events-none"

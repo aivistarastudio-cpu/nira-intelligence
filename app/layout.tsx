@@ -131,15 +131,24 @@ export default function RootLayout({
         {/* Client-hydrated Native Preloader (Unmounts instantly when React mounts) */}
         <NativePreloader />
         <script dangerouslySetInnerHTML={{ __html: `
-          // Safe fallback: force disable preloader if React hydration is delayed
-          setTimeout(function() {
-            var p = document.getElementById('nira-native-preloader');
-            if (p) {
-              p.style.opacity = '0';
-              p.style.pointerEvents = 'none';
-              setTimeout(function() { p.style.display = 'none'; }, 800);
+          (function() {
+            function dismissPreloader() {
+              var p = document.getElementById('nira-native-preloader');
+              if (p && p.style.opacity !== '0') {
+                p.style.opacity = '0';
+                p.style.pointerEvents = 'none';
+                setTimeout(function() { p.style.display = 'none'; }, 300);
+              }
             }
-          }, 1200);
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+              dismissPreloader();
+            } else {
+              document.addEventListener('DOMContentLoaded', dismissPreloader);
+              window.addEventListener('load', dismissPreloader);
+            }
+            // Absolute safety fallback
+            setTimeout(dismissPreloader, 1500);
+          })();
         `}} />
 
         <style dangerouslySetInnerHTML={{ __html: `* { text-shadow: none !important; } @keyframes spin { 100% { transform: rotate(360deg); } }` }} />

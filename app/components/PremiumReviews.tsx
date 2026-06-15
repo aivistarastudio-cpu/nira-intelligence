@@ -113,7 +113,7 @@ function ReviewCard({
         group relative flex flex-col justify-between overflow-hidden shrink-0 snap-center cursor-crosshair
         w-[85vw] sm:w-[340px] md:w-[400px] h-[360px] md:h-[400px]
         p-8 md:p-10 rounded-[32px]
-        bg-[#0D0D10]/75 backdrop-blur-2xl transform-gpu
+        bg-[#0D0D10]/95 md:bg-[#0D0D10]/75 backdrop-blur-none md:backdrop-blur-2xl transform-gpu
         border ${isNew ? "border-blue-500/40" : "border-white/[0.08]"}
         shadow-[0_12px_40px_rgba(0,0,0,0.5)]
         transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
@@ -258,8 +258,10 @@ export default function PremiumReviews() {
     const mouse = { x: -9999, y: -9999 };
     let nodes: { x: number; y: number; vx: number; vy: number }[] = [];
 
+    const isMobile = window.innerWidth < 768;
+
     function createNodes() {
-      const nodeCount = window.innerWidth < 768 ? 40 : 70;
+      const nodeCount = isMobile ? 20 : 70;
       nodes = Array.from({ length: nodeCount }).map(() => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -270,7 +272,7 @@ export default function PremiumReviews() {
 
     const resize = () => {
       if (!canvas.parentElement) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = canvas.parentElement.offsetWidth;
       h = canvas.parentElement.offsetHeight;
 
@@ -301,19 +303,34 @@ export default function PremiumReviews() {
     canvas.addEventListener("mouseleave", onMouseLeave);
 
     let animationId: number;
+    let lastTime = 0;
+    const fpsInterval = 1000 / 30; // 30 FPS throttle on mobile
 
-    function draw() {
+    function draw(timestamp: number) {
+      animationId = requestAnimationFrame(draw);
+
+      if (isMobile && timestamp) {
+        const elapsed = timestamp - lastTime;
+        if (elapsed < fpsInterval) return;
+        lastTime = timestamp - (elapsed % fpsInterval);
+      }
+
       ctx.clearRect(0, 0, w, h);
 
+      const repelRadius = 160;
       nodes.forEach((a) => {
         const dxm = a.x - mouse.x;
         const dym = a.y - mouse.y;
-        const distMouse = Math.sqrt(dxm * dxm + dym * dym);
-
-        if (distMouse < 160 && distMouse > 0.1) {
-          const force = (160 - distMouse) / 160;
-          a.vx += (dxm / distMouse) * force * 0.4;
-          a.vy += (dym / distMouse) * force * 0.4;
+        
+        let currentSize = 1.6;
+        if (Math.abs(dxm) < repelRadius && Math.abs(dym) < repelRadius) {
+          const distMouse = Math.sqrt(dxm * dxm + dym * dym);
+          if (distMouse < repelRadius && distMouse > 0.1) {
+            const force = (repelRadius - distMouse) / repelRadius;
+            a.vx += (dxm / distMouse) * force * 0.4;
+            a.vy += (dym / distMouse) * force * 0.4;
+            if (distMouse < 120) currentSize = 2.4;
+          }
         }
 
         a.x += a.vx;
@@ -326,19 +343,14 @@ export default function PremiumReviews() {
         if (a.x < 0 || a.x > w) a.vx *= -1;
         if (a.y < 0 || a.y > h) a.vy *= -1;
 
-        // Note: lines are NOT drawn here to match the exact resting state of page.tsx
-        // page.tsx only draws lines when 'pulse' is true (on logo click)
-
         ctx.beginPath();
         ctx.fillStyle = "rgba(255,255,255,0.35)";
-        ctx.arc(a.x, a.y, distMouse < 120 ? 2.4 : 1.6, 0, Math.PI * 2);
+        ctx.arc(a.x, a.y, currentSize, 0, Math.PI * 2);
         ctx.fill();
       });
-
-      animationId = requestAnimationFrame(draw);
     }
 
-    draw();
+    draw(0);
 
     // Re-calculate size periodically in case the reviews section grows (e.g. "Read all stories" clicked)
     const interval = setInterval(() => {
@@ -410,6 +422,7 @@ export default function PremiumReviews() {
     <div 
       id="reviews-section" 
       className="relative w-full pt-12 pb-20 md:pt-16 md:pb-32 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '1000px' }}
     >
 
       {/* Dedicated Neural Canvas for Reviews Section */}
@@ -539,7 +552,7 @@ export default function PremiumReviews() {
             className="
               group relative flex items-center justify-center gap-2
               px-6 py-3 md:px-7 md:py-3.5 rounded-full
-              bg-[#1A1A1C]/80 backdrop-blur-2xl border border-white/[0.08]
+              bg-[#1A1A1C]/95 md:bg-[#1A1A1C]/80 backdrop-blur-none md:backdrop-blur-2xl border border-white/[0.08]
               text-white/90 font-medium text-[14px] md:text-[15px] tracking-tight
               transition-all duration-300 ease-out
               hover:bg-[#2A2A2D]/90 hover:border-white/[0.15]
@@ -579,7 +592,7 @@ export default function PremiumReviews() {
           {/* Moving Aurora Background behind the form */}
           <div className="absolute inset-0 w-[200%] h-[200%] top-[-50%] left-[-50%] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#1a2942_50%,#000000_100%)] opacity-30 animate-[spin_10s_linear_infinite] pointer-events-none" />
           
-          <div className="relative p-6 md:p-10 rounded-[34px] bg-[#050505]/90 backdrop-blur-3xl transform-gpu border border-white/[0.05] transition-all duration-500">
+          <div className="relative p-6 md:p-10 rounded-[34px] bg-[#050505]/95 md:bg-[#050505]/90 backdrop-blur-none md:backdrop-blur-3xl transform-gpu border border-white/[0.05] transition-all duration-500">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[2px] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent blur-[2px] opacity-70" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[1px] bg-white opacity-50" />
 

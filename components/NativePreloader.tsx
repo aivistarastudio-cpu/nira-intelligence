@@ -20,7 +20,7 @@ export default function NativePreloader() {
       
       const timer = setTimeout(() => {
         setMounted(true);
-      }, 800); // Remove from DOM after fade-out transition completes
+      }, 300); // Remove from DOM after fade-out transition completes
       
       return () => clearTimeout(timer);
     } else {
@@ -43,7 +43,7 @@ export default function NativePreloader() {
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent: "center",
-        transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)", 
+        transition: "opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1)", 
         opacity: 1,
         pointerEvents: "auto"
       }}

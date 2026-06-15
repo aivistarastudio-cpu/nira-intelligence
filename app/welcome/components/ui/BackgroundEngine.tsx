@@ -10,7 +10,8 @@ function ParticleField() {
   const [sphere, setSphere] = useState<Float32Array | null>(null);
 
   useEffect(() => {
-    const count = 5000;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const count = isMobile ? 1200 : 5000;
     const points = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
@@ -53,6 +54,12 @@ function ParticleField() {
 }
 
 const QuantumCanvas = ({ index = 0 }: { index?: number }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const bgColors = [
     "radial-gradient(circle at 50% 50%, rgba(14,165,233,0.15) 0%, rgba(2,6,23,1) 80%)", // Blue
     "radial-gradient(circle at 50% 50%, rgba(139,92,246,0.15) 0%, rgba(2,6,23,1) 80%)", // Purple
@@ -69,7 +76,15 @@ const QuantumCanvas = ({ index = 0 }: { index?: number }) => {
         transition={{ duration: 1.5, ease: "easeInOut" }}
       />
       <div className="absolute inset-0 z-10 opacity-70 mix-blend-screen">
-        <Canvas camera={{ position: [0, 0, 1.8] }} gl={{ antialias: true }}>
+        <Canvas 
+          camera={{ position: [0, 0, 1.8] }} 
+          gl={{ 
+            antialias: !isMobile, 
+            powerPreference: "high-performance",
+            precision: isMobile ? "mediump" : "highp"
+          }}
+          dpr={isMobile ? [1, 1.2] : [1, 1.5]}
+        >
           <ambientLight intensity={0.3} />
           <ParticleField />
         </Canvas>
