@@ -16,8 +16,13 @@ export async function fetchApprovedReviews() {
       return [];
     }
 
-    // Filter out diagnostic/test/bot reviews to only display real user reviews
+    // Filter out initial database test/demo reviews (id <= 10) and diagnostic/test/bot reviews
     const filtered = (data || []).filter((review) => {
+      // Hide all initial test/demo reviews
+      if (review.id <= 10) {
+        return false;
+      }
+
       const name = (review.name || '').toLowerCase();
       const role = (review.role || '').toLowerCase();
       const text = (review.review || '').toLowerCase();

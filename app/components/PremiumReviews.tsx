@@ -469,6 +469,11 @@ export default function PremiumReviews() {
                 <div className="flex w-full items-center justify-center py-20">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
                 </div>
+              ) : reviewsList.length === 0 ? (
+                <div className="flex flex-col items-center justify-center w-full py-16 text-center select-none">
+                  <p className="text-zinc-400 text-lg font-semibold tracking-tight">No reviews yet.</p>
+                  <p className="text-zinc-500 text-sm mt-1.5 font-medium max-w-sm">Be the first to share your experience below!</p>
+                </div>
               ) : (
                 reviewsList.map((review, index) => (
                   <ReviewCard 
@@ -487,46 +492,48 @@ export default function PremiumReviews() {
         </motion.div>
       </motion.div>
 
-      <motion.div 
-        layout 
-        transition={premiumTransition}
-        className="flex justify-center mt-6 md:mt-10 px-6 relative z-20"
-        style={{ opacity: hoveredCardId ? 0.2 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)", transition: "all 1s cubic-bezier(0.16, 1, 0.3, 1)" }}
-      >
-        <button 
-          onClick={() => {
-            if (showAll) {
-              const el = document.getElementById("reviews-section");
-              if (el) {
-                const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-              }
-            }
-            setShowAll(!showAll);
-          }}
-          className="
-            group relative flex items-center justify-center gap-2
-            px-6 py-3 md:px-7 md:py-3.5 rounded-full
-            bg-[#1A1A1C]/80 backdrop-blur-2xl border border-white/[0.08]
-            text-white/90 font-medium text-[14px] md:text-[15px] tracking-tight
-            transition-all duration-300 ease-out
-            hover:bg-[#2A2A2D]/90 hover:border-white/[0.15]
-            active:scale-[0.97] overflow-hidden
-          "
+      {reviewsList.length > 0 && (
+        <motion.div 
+          layout 
+          transition={premiumTransition}
+          className="flex justify-center mt-6 md:mt-10 px-6 relative z-20"
+          style={{ opacity: hoveredCardId ? 0.2 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)", transition: "all 1s cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
-          {showAll ? "Show less stories" : "Read all stories"}
-          <motion.svg 
-            animate={{ rotate: showAll ? -90 : 0 }}
-            transition={premiumTransition}
-            className="w-4 h-4 text-white/50 group-hover:text-white/90 transition-colors duration-300" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
+          <button 
+            onClick={() => {
+              if (showAll) {
+                const el = document.getElementById("reviews-section");
+                if (el) {
+                  const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                  window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+              }
+              setShowAll(!showAll);
+            }}
+            className="
+              group relative flex items-center justify-center gap-2
+              px-6 py-3 md:px-7 md:py-3.5 rounded-full
+              bg-[#1A1A1C]/80 backdrop-blur-2xl border border-white/[0.08]
+              text-white/90 font-medium text-[14px] md:text-[15px] tracking-tight
+              transition-all duration-300 ease-out
+              hover:bg-[#2A2A2D]/90 hover:border-white/[0.15]
+              active:scale-[0.97] overflow-hidden
+            "
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-          </motion.svg>
-        </button>
-      </motion.div>
+            {showAll ? "Show less stories" : "Read all stories"}
+            <motion.svg 
+              animate={{ rotate: showAll ? -90 : 0 }}
+              transition={premiumTransition}
+              className="w-4 h-4 text-white/50 group-hover:text-white/90 transition-colors duration-300" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </motion.svg>
+          </button>
+        </motion.div>
+      )}
 
       {/* Ultra-Premium Review Submission Form */}
       <motion.div 
