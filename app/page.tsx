@@ -36,6 +36,9 @@ export default function Home() {
   // Background particles fade gradually from 1.0 -> 0.25
   const bgOpacity = useTransform(scrollY, [0, 600], [1.0, 0.25]);
 
+  // Background particles scale shifts (dolly zoom depth effect)
+  const bgScale = useTransform(scrollY, [0, 600], [1.0, 1.06]);
+
   // Hero section scale: subtle 1.0 -> 0.96 (premium and elegant)
   const heroScale = useTransform(scrollY, [0, 500], [1.0, 0.96]);
 
@@ -236,7 +239,7 @@ export default function Home() {
         style={{
           y: bgY,
           opacity: leaving ? 0 : bgOpacity,
-          scale: leaving ? 1.1 : 1.0,
+          scale: leaving ? 1.1 : bgScale,
           filter: leaving ? "blur(20px)" : "blur(0px)",
           transition: leaving ? "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)" : "none"
         }}
@@ -294,7 +297,7 @@ export default function Home() {
           className="flex flex-col items-center mt-3 md:mt-6"
         >
           <h1 
-            className="text-[36px] sm:text-[56px] md:text-[80px] font-[700] leading-[1] tracking-[0.3em] md:tracking-[0.35em] text-white font-sans drop-shadow-none pl-[0.3em] md:pl-[0.35em] mix-blend-normal"
+            className="shimmer-text-wave text-[36px] sm:text-[56px] md:text-[80px] font-[700] leading-[1] tracking-[0.3em] md:tracking-[0.35em] text-white font-sans drop-shadow-none pl-[0.3em] md:pl-[0.35em] mix-blend-normal"
             style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", textShadow: "none" }}
           >
             NIRA
@@ -327,7 +330,7 @@ export default function Home() {
           >
             <span>One request. </span>
             <span className="text-white/30">Multiple intelligences.</span> <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-amber-200 to-rose-500">The best possible answer.</span>
+            <span className="shimmer-rose-wave">The best possible answer.</span>
           </motion.h2>
         </motion.div>
 

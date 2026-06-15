@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 import { fetchApprovedReviews, submitReview } from "@/app/actions/reviewActions";
 import { smoothScrollTo } from "@/lib/scrollUtils";
@@ -57,6 +57,50 @@ function ReviewCard({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [scrollTilt, setScrollTilt] = useState(0);
+
+  useEffect(() => {
+    // Scroll tilt is only active on carousel mode (showAll is false)
+    if (showAll) {
+      setScrollTilt(0);
+      return;
+    }
+
+    const container = document.getElementById("reviews-scroll-container");
+    if (!container) return;
+
+    const updateTilt = () => {
+      if (!cardRef.current) return;
+      const cardRect = cardRef.current.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      
+      // Calculate card center relative to container center
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const containerCenter = containerRect.left + containerRect.width / 2;
+      const offset = cardCenter - containerCenter;
+      
+      // Max offset is half container width
+      const maxOffset = containerRect.width / 2;
+      const ratio = Math.max(-1, Math.min(1, offset / (maxOffset || 1)));
+      
+      // Dynamic tilt: tilt away from center (up to 8 degrees)
+      setScrollTilt(ratio * 8);
+    };
+
+    container.addEventListener("scroll", updateTilt, { passive: true });
+    window.addEventListener("resize", updateTilt, { passive: true });
+    
+    // Initial calculation with a slight delay
+    const timer = setTimeout(updateTilt, 100);
+
+    return () => {
+      container.removeEventListener("scroll", updateTilt);
+      window.removeEventListener("resize", updateTilt);
+      clearTimeout(timer);
+    };
+  }, [showAll]);
+
   const mouseXSpring = useSpring(x, { stiffness: 100, damping: 25 });
   const mouseYSpring = useSpring(y, { stiffness: 100, damping: 25 });
 
@@ -91,6 +135,7 @@ function ReviewCard({
 
   return (
     <motion.div
+      ref={cardRef}
       layout
       variants={cardVariants}
       initial={isNew ? { opacity: 0, scale: 0.9, x: -50, filter: "blur(6px)" } : (showAll ? { opacity: 0, scale: 0.98 } : undefined)}
@@ -111,8 +156,8 @@ function ReviewCard({
         filter: { type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.8 },
       }}
       style={{
-        rotateX,
-        rotateY,
+        rotateX: isHovered ? rotateX : 0,
+        rotateY: isHovered ? rotateY : `${scrollTilt}deg`,
         transformPerspective: 1200,
         filter: showAll && !isOtherHovered ? "none" : `brightness(${brightness})`, // Only apply brightness shift if not in grid to save performance
       }}
@@ -222,6 +267,7 @@ export default function PremiumReviews() {
   // Scroll speed offsets for true layered depth:
   // Background particles scroll at 0.1x speed (resists upward scroll)
   const bgY = useTransform(scrollY, [0, 2000], [0, -200]);
+  const bgScale = useTransform(scrollY, [200, 700], [1.0, 1.06]);
   // Reviews header scrolls at 0.15x speed
   const headerY = useTransform(scrollY, [0, 2000], [0, -300]);
   // Reviews grid/carousel scrolls at 0.2x speed
@@ -448,7 +494,7 @@ export default function PremiumReviews() {
       {/* Dedicated Neural Canvas for Reviews Section */}
       <motion.canvas
         ref={canvasRef}
-        style={{ y: bgY }}
+        style={{ y: bgY, scale: bgScale }}
         className="absolute inset-0 z-0 pointer-events-none opacity-100"
       />
 

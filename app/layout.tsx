@@ -6,6 +6,7 @@ import { ClientSettingsProvider } from "./components/ClientSettingsProvider";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import RouteTransitionLoader from "./components/RouteTransitionLoader";
 import NativePreloader from "@/components/NativePreloader";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -125,9 +126,11 @@ export default function RootLayout({
 
           {/* 🧠 APP CONTAINER */}
           <div className="relative z-10 flex flex-col min-h-[100dvh]">
-            <main className="flex-1 w-full">
-              {children}
-            </main>
+            <SmoothScroll>
+              <main className="flex-1 w-full">
+                {children}
+              </main>
+            </SmoothScroll>
             <AuthListener />
           </div>
         </ThemeProvider>

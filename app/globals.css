@@ -431,3 +431,71 @@ li {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.28);
 }
+
+/* =====================================================
+💎 APPLE INTELLIGENCE WAVE SHIMMER
+===================================================== */
+@keyframes shimmerWave {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.shimmer-text-wave {
+  background: linear-gradient(
+    90deg,
+    #FFFFFF 0%,
+    #FFFFFF 35%,
+    #FFB2D6 48%,
+    #FFD59A 52%,
+    #FFFFFF 65%,
+    #FFFFFF 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmerWave 6s linear infinite;
+  display: inline-block;
+}
+
+html.dark .shimmer-text-wave {
+  background: linear-gradient(
+    90deg,
+    #FAFAFA 0%,
+    #FAFAFA 35%,
+    #FFA6C9 48%,
+    #FFE3B3 52%,
+    #FAFAFA 65%,
+    #FAFAFA 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmerWave 6s linear infinite;
+}
+
+.shimmer-rose-wave {
+  background: linear-gradient(
+    90deg,
+    #FDA4AF 0%,
+    #FDE047 30%,
+    #FB7185 50%,
+    #FDA4AF 70%,
+    #FDA4AF 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmerWave 8s linear infinite;
+  display: inline-block;
+}
+
