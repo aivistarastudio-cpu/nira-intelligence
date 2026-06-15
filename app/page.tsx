@@ -14,6 +14,7 @@ export default function Home() {
   const [logoActive, setLogoActive] = useState(false);
   const [pulse, setPulse] = useState(false);
   const [activeSection, setActiveSection] = useState<"hero" | "reviews">("hero");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Audio for UI interactions using unified local synthesizer
   const uiSound = playUISound;
@@ -24,6 +25,7 @@ export default function Home() {
 
     const handleScroll = () => {
       const scrollPos = container.scrollTop;
+      setIsScrolled(scrollPos > 20);
       const threshold = window.innerHeight * 0.45;
       if (scrollPos >= threshold) {
         setActiveSection("reviews");
@@ -338,8 +340,14 @@ export default function Home() {
           Built for creators, teams & AI-first companies
         </p>
 
-        {/* Premium Bottom Navigation Dock (Absolute, scrolls with section) */}
-        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none">
+        {/* Premium Bottom Navigation Dock (Fixed, fades out on scroll) */}
+        <div 
+          className={`fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isScrolled 
+              ? "opacity-0 translate-y-10 scale-95" 
+              : "opacity-100 translate-y-0 scale-100"
+          }`}
+        >
           <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/70 backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
             <button
               onClick={() => {
