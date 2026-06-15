@@ -89,7 +89,35 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`scroll-smooth dark ${inter.variable} ${jetbrainsMono.variable}`} 
     >
-      <head />
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "NIRA Intelligence",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "All",
+              "description": "NIRA is a premium AI platform that integrates the world's most powerful AI models, dynamically routing requests to special engines for text, images, and video.",
+              "url": "https://www.niraintelligence.com",
+              "logo": "https://www.niraintelligence.com/favicon.svg",
+              "offers": {
+                "@type": "Offer",
+                "price": "0.00",
+                "priceCurrency": "USD",
+                "description": "Free trial available with premium upgrade tiers"
+              },
+              "creator": {
+                "@type": "Organization",
+                "name": "NIRA Intelligence",
+                "url": "https://www.niraintelligence.com",
+                "logo": "https://www.niraintelligence.com/favicon.svg"
+              }
+            })
+          }}
+        />
+      </head>
 
       <body
         className={`
