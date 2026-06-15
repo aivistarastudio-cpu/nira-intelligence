@@ -185,7 +185,7 @@ export default function Home() {
 
       <canvas ref={canvasRef} className={`fixed inset-0 z-0 pointer-events-none transition-all duration-700 ${leaving ? "scale-110 opacity-0 blur-xl" : "opacity-100"}`} />
       
-      <div className={`relative z-10 flex h-full min-h-full w-full flex-col items-center justify-center px-6 md:px-8 py-12 md:py-20 text-center transition-all duration-700 snap-start shrink-0 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
+      <div className={`relative z-10 flex h-full min-h-full w-full flex-col items-center justify-center px-6 md:px-8 pt-12 pb-24 md:pt-20 md:pb-36 text-center transition-all duration-700 snap-start shrink-0 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
         
         {/* NIRA Official Logo */}
         <div
@@ -336,7 +336,7 @@ export default function Home() {
           </button>
         </div>
 
-        <p className="mt-10 md:mt-16 mb-0 text-[11px] md:text-[12px] text-zinc-600 tracking-[0.04em] uppercase font-[500] antialiased">
+        <p className="mt-6 md:mt-10 mb-0 text-[11px] md:text-[12px] text-zinc-600 tracking-[0.04em] uppercase font-[500] antialiased">
           Built for creators, teams & AI-first companies
         </p>
 
