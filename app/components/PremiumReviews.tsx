@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 import { fetchApprovedReviews, submitReview } from "@/app/actions/reviewActions";
 import { smoothScrollTo } from "@/lib/scrollUtils";
 
@@ -215,6 +215,25 @@ export default function PremiumReviews() {
   const [reviewsList, setReviewsList] = useState(initialReviews);
   const [isClient, setIsClient] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
+
+  // Scroll tracking for Reviews section parallax & fades
+  const { scrollY } = useScroll();
+
+  // Scroll speed offsets for true layered depth:
+  // Background particles scroll at 0.1x speed (resists upward scroll)
+  const bgY = useTransform(scrollY, [0, 2000], [0, -200]);
+  // Reviews header scrolls at 0.15x speed
+  const headerY = useTransform(scrollY, [0, 2000], [0, -300]);
+  // Reviews grid/carousel scrolls at 0.2x speed
+  const gridY = useTransform(scrollY, [0, 2000], [0, -400]);
+  // Reviews form scrolls at 0.25x speed
+  const formY = useTransform(scrollY, [0, 2000], [0, -500]);
+
+  // Section cross-fade scroll transitions (from scrollY = 200 to 700)
+  const reviewsOpacity = useTransform(scrollY, [200, 700], [0.0, 1.0]);
+  const reviewsScale = useTransform(scrollY, [200, 700], [0.98, 1.0]);
+  const blurVal = useTransform(scrollY, [200, 700], [4, 0]);
+  const reviewsBlur = useTransform(blurVal, (v) => `blur(${v}px)`);
   
   // Form State
   const [newName, setNewName] = useState("");
@@ -416,11 +435,20 @@ export default function PremiumReviews() {
   if (!isClient) return null;
 
   return (
-    <div id="reviews-section" className="relative w-full pt-12 pb-20 md:pt-16 md:pb-32 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none">
+    <motion.div 
+      id="reviews-section" 
+      style={{
+        opacity: reviewsOpacity,
+        scale: reviewsScale,
+        filter: reviewsBlur
+      }}
+      className="relative w-full pt-12 pb-20 md:pt-16 md:pb-32 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none"
+    >
 
       {/* Dedicated Neural Canvas for Reviews Section */}
-      <canvas
+      <motion.canvas
         ref={canvasRef}
+        style={{ y: bgY }}
         className="absolute inset-0 z-0 pointer-events-none opacity-100"
       />
 
@@ -429,6 +457,7 @@ export default function PremiumReviews() {
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        style={{ y: headerY }}
         className="flex flex-col items-center justify-center mb-16 md:mb-24 text-center px-6 relative z-10"
       >
         <h2 className="text-3xl sm:text-4xl md:text-[52px] font-[700] tracking-[-0.03em] text-white leading-tight transition-all duration-1000 font-sans"
@@ -442,7 +471,12 @@ export default function PremiumReviews() {
       </motion.div>
 
       {/* Main Review Container */}
-      <motion.div layout transition={premiumTransition} className="relative w-full max-w-[1400px] mx-auto origin-top flex flex-col items-center">
+      <motion.div 
+        layout 
+        transition={premiumTransition} 
+        style={{ y: gridY }}
+        className="relative w-full max-w-[1400px] mx-auto origin-top flex flex-col items-center"
+      >
         
         {/* Edge Fade Masks for Horizontal Scroll */}
         <AnimatePresence>
@@ -556,7 +590,11 @@ export default function PremiumReviews() {
         viewport={{ once: true }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         className="mt-20 md:mt-32 w-full max-w-2xl mx-auto px-6 relative z-10 transition-all duration-1000"
-        style={{ opacity: hoveredCardId ? 0.2 : 1, filter: hoveredCardId ? "blur(2px)" : "blur(0px)" }}
+        style={{ 
+          y: formY,
+          opacity: hoveredCardId ? 0.2 : 1, 
+          filter: hoveredCardId ? "blur(2px)" : "blur(0px)" 
+        }}
       >
         <div className="relative p-1 rounded-[36px] bg-gradient-to-b from-white/[0.08] to-transparent shadow-[0_0_50px_rgba(0,0,0,0.5)] group overflow-hidden">
           
@@ -663,6 +701,6 @@ export default function PremiumReviews() {
         </div>
       </motion.div>
 
-    </div>
+    </motion.div>
   );
 }
