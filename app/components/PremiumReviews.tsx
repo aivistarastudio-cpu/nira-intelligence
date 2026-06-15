@@ -477,8 +477,23 @@ export default function PremiumReviews() {
           >
             <AnimatePresence initial={false}>
               {isLoadingReviews ? (
-                <div className="flex w-full items-center justify-center py-20">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                <div className="flex flex-col w-full items-center justify-center py-20 gap-4">
+                  <svg 
+                    viewBox="0 0 200 200" 
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-12 h-12 text-white/80"
+                    style={{ animation: "spin 15s linear infinite" }}
+                  >
+                    <g stroke="currentColor" strokeWidth="10" strokeLinecap="round" opacity="0.95">
+                      <ellipse cx="100" cy="100" rx="35" ry="80" />
+                      <ellipse cx="100" cy="100" rx="35" ry="80" transform="rotate(60 100 100)" />
+                      <ellipse cx="100" cy="100" rx="35" ry="80" transform="rotate(-60 100 100)" />
+                    </g>
+                  </svg>
+                  <span className="text-[11px] font-semibold tracking-[0.2em] text-zinc-500 uppercase">
+                    Loading Stories...
+                  </span>
                 </div>
               ) : reviewsList.length === 0 ? (
                 <div className="flex flex-col items-center justify-center w-full py-16 text-center select-none">
