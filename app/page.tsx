@@ -14,6 +14,7 @@ export default function Home() {
   const [logoActive, setLogoActive] = useState(false);
   const [pulse, setPulse] = useState(false);
   const [activeSection, setActiveSection] = useState<"hero" | "reviews">("hero");
+  const [isAtBottom, setIsAtBottom] = useState(false);
 
   // Audio for UI interactions using unified local synthesizer
   const uiSound = playUISound;
@@ -24,6 +25,13 @@ export default function Home() {
 
     const handleScroll = () => {
       const scrollPos = container.scrollTop;
+      const scrollHeight = container.scrollHeight;
+      const clientHeight = container.clientHeight;
+
+      // Auto-hide bottom dock when user scrolls near the submission form
+      const isNearBottom = scrollHeight - scrollPos - clientHeight < 280;
+      setIsAtBottom(isNearBottom);
+
       const threshold = window.innerHeight * 0.45;
       if (scrollPos >= threshold) {
         setActiveSection("reviews");
@@ -345,7 +353,7 @@ export default function Home() {
       </div>
 
       {/* Floating Premium Bottom Navigation Dock */}
-      <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+1.5rem)] md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none">
+      <div className={`fixed bottom-[calc(env(safe-area-inset-bottom)+1.5rem)] md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none transition-all duration-500 ${isAtBottom ? "opacity-0 translate-y-6" : "opacity-100 translate-y-0"}`}>
         <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/70 backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
           <button
             onClick={() => {
