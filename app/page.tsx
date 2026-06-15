@@ -14,7 +14,6 @@ export default function Home() {
   const [logoActive, setLogoActive] = useState(false);
   const [pulse, setPulse] = useState(false);
   const [activeSection, setActiveSection] = useState<"hero" | "reviews">("hero");
-  const [isAtBottom, setIsAtBottom] = useState(false);
 
   // Audio for UI interactions using unified local synthesizer
   const uiSound = playUISound;
@@ -25,13 +24,6 @@ export default function Home() {
 
     const handleScroll = () => {
       const scrollPos = container.scrollTop;
-      const scrollHeight = container.scrollHeight;
-      const clientHeight = container.clientHeight;
-
-      // Auto-hide bottom dock when user scrolls near the submission form
-      const isNearBottom = scrollHeight - scrollPos - clientHeight < 280;
-      setIsAtBottom(isNearBottom);
-
       const threshold = window.innerHeight * 0.45;
       if (scrollPos >= threshold) {
         setActiveSection("reviews");
@@ -346,48 +338,46 @@ export default function Home() {
           Built for creators, teams & AI-first companies
         </p>
 
+        {/* Premium Bottom Navigation Dock (Absolute, scrolls with section) */}
+        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none">
+          <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/70 backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
+            <button
+              onClick={() => {
+                uiSound("click");
+                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
+                activeSection === "hero"
+                  ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Overview
+            </button>
+            
+            <button
+              onClick={() => {
+                uiSound("click");
+                const container = mainRef.current;
+                if (container) {
+                  container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+                }
+              }}
+              className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
+                activeSection === "reviews"
+                  ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Reviews
+            </button>
+          </div>
+        </div>
+
       </div>
 
       <div className={`relative z-10 w-full min-h-[100dvh] flex flex-col justify-center transition-all duration-1000 delay-300 snap-start shrink-0 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
         <PremiumReviews />
-      </div>
-
-      {/* Floating Premium Bottom Navigation Dock */}
-      <div className={`fixed bottom-[calc(env(safe-area-inset-bottom)+1.5rem)] md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center pointer-events-none transition-all duration-500 ${isAtBottom ? "opacity-0 translate-y-6" : "opacity-100 translate-y-0"}`}>
-        <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-[#0D0D10]/70 backdrop-blur-2xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-auto transition-all duration-700">
-          <button
-            onClick={() => {
-              uiSound("click");
-              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
-              activeSection === "hero"
-                ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
-                : "text-zinc-400 hover:text-white"
-            }`}
-          >
-            Overview
-          </button>
-          
-          <button
-            onClick={() => {
-              uiSound("click");
-              setIsAtBottom(true); // Hide navigation dock immediately
-              const container = mainRef.current;
-              if (container) {
-                // Scroll directly to the bottom where the review submission form sits
-                container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
-              }
-            }}
-            className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
-              activeSection === "reviews"
-                ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"
-                : "text-zinc-400 hover:text-white"
-            }`}
-          >
-            Reviews
-          </button>
-        </div>
       </div>
     </main>
   );
