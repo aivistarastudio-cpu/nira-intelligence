@@ -20,11 +20,8 @@ export default function Home() {
   const uiSound = playUISound;
 
   useEffect(() => {
-    const container = mainRef.current;
-    if (!container) return;
-
     const handleScroll = () => {
-      const scrollPos = container.scrollTop;
+      const scrollPos = window.scrollY;
       setIsScrolled(scrollPos > 20);
       const threshold = window.innerHeight * 0.45;
       if (scrollPos >= threshold) {
@@ -34,11 +31,11 @@ export default function Home() {
       }
     };
 
-    container.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -161,7 +158,7 @@ export default function Home() {
   return (
     <main 
       ref={mainRef}
-      className="force-dark relative h-[100dvh] w-full overflow-y-auto overflow-x-hidden text-white bg-black snap-y snap-mandatory scroll-smooth z-10" 
+      className="force-dark relative w-full overflow-x-hidden text-white bg-black scroll-smooth z-10" 
       style={{ 
         paddingTop: 'env(safe-area-inset-top)', 
         paddingBottom: 'env(safe-area-inset-bottom)', 
@@ -185,7 +182,7 @@ export default function Home() {
 
       <canvas ref={canvasRef} className={`fixed inset-0 z-0 pointer-events-none transition-all duration-700 ${leaving ? "scale-110 opacity-0 blur-xl" : "opacity-100"}`} />
       
-      <div className={`relative z-10 flex h-full min-h-full w-full flex-col items-center justify-center px-6 md:px-8 pt-12 pb-24 md:pt-20 md:pb-36 text-center transition-all duration-700 snap-start shrink-0 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
+      <div className={`relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 md:px-8 pt-12 pb-24 md:pt-20 md:pb-36 text-center transition-all duration-700 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
         
         {/* NIRA Official Logo */}
         <div
@@ -352,7 +349,7 @@ export default function Home() {
             <button
               onClick={() => {
                 uiSound("click");
-                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
                 activeSection === "hero"
@@ -366,9 +363,9 @@ export default function Home() {
             <button
               onClick={() => {
                 uiSound("click");
-                const container = mainRef.current;
-                if (container) {
-                  container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+                const el = document.getElementById("reviews-section");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
                 }
               }}
               className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
@@ -384,7 +381,7 @@ export default function Home() {
 
       </div>
 
-      <div className={`relative z-10 w-full min-h-[100dvh] flex flex-col justify-center transition-all duration-1000 delay-300 snap-start shrink-0 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
+      <div className={`relative z-10 w-full min-h-[100dvh] flex flex-col justify-center transition-all duration-1000 delay-300 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
         <PremiumReviews />
       </div>
 
@@ -392,7 +389,7 @@ export default function Home() {
       <button
         onClick={() => {
           uiSound("click");
-          mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         className={`fixed bottom-6 right-6 md:bottom-8 md:right-10 z-55 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0D0D10]/80 backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-zinc-400 hover:text-white hover:scale-[1.05] active:scale-[0.92] hover:border-white/[0.15] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
           isScrolled 

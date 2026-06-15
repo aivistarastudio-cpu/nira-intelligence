@@ -100,7 +100,7 @@ export default function RootLayout({
         `}
       >
         {/* NATIVE HTML PRELOADER: Renders instantly before React downloads */}
-        <div id="nira-native-preloader" style={{
+        <div id="nira-native-preloader" suppressHydrationWarning={true} style={{
           position: "fixed", inset: 0, zIndex: 999999, backgroundColor: "#000000",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)", opacity: 1
