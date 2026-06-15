@@ -15,13 +15,11 @@ import {
  IconRocket,
  IconInfinity,
  IconDatabase,
- IconAperture,
- IconBot,
- IconHexagon,
- IconSearchFocus,
- IconCheckDot,
- IconLocationNode,
- IconMenuBars,
+  IconAperture,
+  IconHexagon,
+  IconSearchFocus,
+  IconCheckDot,
+  IconMenuBars,
  IconCloseX,
  IconArrowSlant,
  IconArrowRightLine
@@ -561,7 +559,7 @@ function WhyNira() {
  <div className="max-w-2xl">
  <p className="text-xl md:text-2xl font-normal tracking-tight text-[color-mix(in_srgb,var(--nira-text)_70%,transparent)]">
  NIRA adapts to you, learns with you and grows with you.<br/>
- <span className="text-[var(--nira-text)] font-semibold">It's more than AI — it's your intelligence partner.</span>
+ <span className="text-[var(--nira-text)] font-semibold">It&apos;s more than AI — it&apos;s your intelligence partner.</span>
  </p>
  </div>
  <div className="flex gap-8 text-[color-mix(in_srgb,var(--nira-text)_80%,transparent)]">
@@ -809,7 +807,7 @@ function Roadmap() {
  The Path to AGI
  </h2>
  <p className="text-lg md:text-xl text-[color-mix(in_srgb,var(--nira-text)_70%,transparent)] font-medium max-w-2xl mx-auto relative z-10">
- Our systematic approach to building the world's most advanced artificial intelligence ecosystem.
+ Our systematic approach to building the world&apos;s most advanced artificial intelligence ecosystem.
  </p>
  </div>
  </FadeIn>
@@ -848,7 +846,7 @@ function Roadmap() {
  
  {/* Step Badge with Icon */}
  <div className="flex items-center gap-3">
- <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${step.color} text-white flex items-center justify-center shadow-lg ${step.glow}`}>
+ <div className={`w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br ${step.color} text-white flex items-center justify-center shadow-lg ${step.glow}`}>
  {step.icon}
  </div>
  <span className={`text-sm font-bold uppercase tracking-widest ${step.active ? "text-[var(--nira-text)]" : "text-[color-mix(in_srgb,var(--nira-text)_60%,transparent)]"}`}>
@@ -974,7 +972,7 @@ function Ecosystem() {
  AGI Capabilities
  </h2>
  <p className="text-lg md:text-xl text-[color-mix(in_srgb,var(--nira-text)_70%,transparent)] font-medium max-w-2xl mx-auto leading-relaxed">
- We aren't just building another chatbot. NIRA is a fully autonomous reasoning engine designed to architect, execute, and heal entire systems.
+ We aren&apos;t just building another chatbot. NIRA is a fully autonomous reasoning engine designed to architect, execute, and heal entire systems.
  </p>
  </div>
  </FadeIn>
@@ -1117,7 +1115,7 @@ function CompanyAndFooter() {
 ========================================================= */
 
 export default function NiraExplorerPage() {
- const [isReady, setIsReady] = useState(true);
+ const [isReady] = useState(true);
 
  return (
  <div className="min-h-[100dvh] bg-[var(--nira-bg)] text-[var(--nira-text)] font-sans selection:bg-[color-mix(in_srgb,var(--nira-text)_20%,transparent)] selection:text-[var(--nira-text)] overflow-x-hidden">
