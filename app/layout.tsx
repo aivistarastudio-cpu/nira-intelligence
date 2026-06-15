@@ -121,6 +121,7 @@ export default function RootLayout({
             var p = document.getElementById('nira-native-preloader');
             if (p) {
               p.style.opacity = '0';
+              p.style.pointerEvents = 'none';
               setTimeout(function() { p.style.display = 'none'; }, 800);
             }
           });
@@ -129,6 +130,7 @@ export default function RootLayout({
             var p = document.getElementById('nira-native-preloader');
             if (p && p.style.opacity !== '0') {
               p.style.opacity = '0';
+              p.style.pointerEvents = 'none';
               setTimeout(function() { p.style.display = 'none'; }, 800);
             }
           }, 3000);
