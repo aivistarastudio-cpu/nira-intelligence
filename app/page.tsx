@@ -372,9 +372,11 @@ export default function Home() {
           <button
             onClick={() => {
               uiSound("click");
+              setIsAtBottom(true); // Hide navigation dock immediately
               const container = mainRef.current;
               if (container) {
-                container.scrollTo({ top: container.clientHeight, behavior: "smooth" });
+                // Scroll directly to the bottom where the review submission form sits
+                container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
               }
             }}
             className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
