@@ -16,7 +16,36 @@ export async function fetchApprovedReviews() {
       return [];
     }
 
-    return data || [];
+    // Filter out diagnostic/test/bot reviews to only display real user reviews
+    const filtered = (data || []).filter((review) => {
+      const name = (review.name || '').toLowerCase();
+      const role = (review.role || '').toLowerCase();
+      const text = (review.review || '').toLowerCase();
+
+      const isFake =
+        name.includes('auditor') ||
+        name.includes('tester') ||
+        name.includes('bot') ||
+        name.includes('qa') ||
+        name.includes('diagnostic') ||
+        name.includes('verification') ||
+        name.includes('test') ||
+        role.includes('auditor') ||
+        role.includes('tester') ||
+        role.includes('bot') ||
+        role.includes('qa') ||
+        role.includes('diagnostic') ||
+        role.includes('verification') ||
+        role.includes('test') ||
+        text.includes('diagnostic') ||
+        text.includes('health test') ||
+        text.includes('write test') ||
+        text.includes('verification');
+
+      return !isFake;
+    });
+
+    return filtered;
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
     return [];
