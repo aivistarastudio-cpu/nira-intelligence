@@ -110,9 +110,10 @@ function ReviewCard({
       className={`
         group relative flex flex-col justify-between overflow-hidden shrink-0 snap-center cursor-crosshair
         w-[85vw] sm:w-[340px] md:w-[400px] h-[360px] md:h-[400px]
-        p-6 md:p-10 rounded-[32px]
-        bg-white/[0.015] backdrop-blur-3xl transform-gpu
-        border ${isNew ? "border-blue-500/40" : "border-white/[0.04]"}
+        p-8 md:p-10 rounded-[32px]
+        bg-[#0D0D10]/75 backdrop-blur-2xl transform-gpu
+        border ${isNew ? "border-blue-500/40" : "border-white/[0.08]"}
+        shadow-[0_12px_40px_rgba(0,0,0,0.5)]
         transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
       `}
     >
@@ -150,7 +151,7 @@ function ReviewCard({
         <div className="flex-grow overflow-y-auto hide-scrollbar pr-1 pb-4">
           <p className={`
             font-sans leading-[1.7] tracking-[-0.015em] transition-colors duration-700
-            ${isHovered ? "text-white" : "text-zinc-400/80 font-medium"}
+            ${isHovered ? "text-white" : "text-zinc-200/90 font-medium"}
             ${(review.review || review.text).length < 50 ? "text-[20px] md:text-[24px]" : "text-[16px] md:text-[17px]"}
           `}>
             &quot;{review.review || review.text}&quot;
@@ -185,10 +186,10 @@ function ReviewCard({
           </div>
         </div>
         <div className="flex flex-col">
-          <span className={`text-[14px] md:text-[16px] font-semibold tracking-tight transition-colors duration-700 ${isHovered ? "text-white" : "text-zinc-300"}`}>
+          <span className={`text-[14px] md:text-[16px] font-semibold tracking-tight transition-colors duration-700 ${isHovered ? "text-white" : "text-zinc-100"}`}>
             {review.name}
           </span>
-          <span className={`text-[13px] md:text-[14px] font-medium transition-colors duration-700 ${isHovered ? "text-zinc-400" : "text-zinc-500"}`}>
+          <span className={`text-[13px] md:text-[14px] font-medium transition-colors duration-700 ${isHovered ? "text-zinc-300" : "text-zinc-400"}`}>
             {review.role}
           </span>
         </div>
@@ -403,7 +404,7 @@ export default function PremiumReviews() {
   if (!isClient) return null;
 
   return (
-    <div id="reviews-section" className="relative w-full pb-24 md:pb-32 pt-10 md:pt-14 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none">
+    <div id="reviews-section" className="relative w-full py-20 md:py-32 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none">
 
       {/* Dedicated Neural Canvas for Reviews Section */}
       <canvas
@@ -416,13 +417,13 @@ export default function PremiumReviews() {
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-100px" }}
         transition={premiumTransition}
-        className="flex flex-col items-center justify-center mb-12 md:mb-16 text-center px-6 relative z-10"
+        className="flex flex-col items-center justify-center mb-16 md:mb-24 text-center px-6 relative z-10"
       >
-        <h2 className="text-4xl md:text-[56px] font-[600] tracking-tight font-[var(--font-display)] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 leading-tight transition-all duration-1000"
+        <h2 className="text-3xl sm:text-4xl md:text-[52px] font-[700] tracking-[-0.03em] text-white leading-tight transition-all duration-1000 font-sans"
             style={{ opacity: hoveredCardId ? 0.3 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)" }}>
           Loved by pioneers.
         </h2>
-        <p className="mt-4 md:mt-6 text-[16px] md:text-[18px] text-gray-400 max-w-2xl font-medium tracking-tight transition-all duration-1000"
+        <p className="mt-3 md:mt-4 text-[15px] sm:text-[17px] text-zinc-400 max-w-2xl font-normal leading-relaxed tracking-tight transition-all duration-1000"
            style={{ opacity: hoveredCardId ? 0.1 : 1, filter: hoveredCardId ? "blur(4px)" : "blur(0px)" }}>
           Join thousands of researchers, educators, and teams building the future with NIRA Intelligence.
         </p>

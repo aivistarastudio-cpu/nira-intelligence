@@ -183,7 +183,7 @@ export default function Home() {
 
       <canvas ref={canvasRef} className={`fixed inset-0 z-0 pointer-events-none transition-all duration-700 ${leaving ? "scale-110 opacity-0 blur-xl" : "opacity-100"}`} />
       
-      <div className={`relative z-10 flex h-full min-h-full w-full flex-col items-center justify-center px-6 md:px-8 pt-16 pb-8 md:pt-24 md:pb-16 text-center transition-all duration-700 snap-start shrink-0 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
+      <div className={`relative z-10 flex h-full min-h-full w-full flex-col items-center justify-center px-6 md:px-8 py-12 md:py-20 text-center transition-all duration-700 snap-start shrink-0 ${leaving ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
         
         {/* NIRA Official Logo */}
         <div
@@ -197,13 +197,13 @@ export default function Home() {
               setPulse(false);
             }, 400);
           }}
-          className={`relative flex h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] md:h-[80px] md:w-[80px] items-center justify-center rounded-[14px] sm:rounded-[18px] md:rounded-[24px] border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${logoActive ? "scale-[0.96] opacity-80" : "scale-100"}`}
+          className={`relative flex h-[44px] w-[44px] sm:h-[52px] sm:w-[52px] md:h-[68px] md:w-[68px] items-center justify-center rounded-[12px] sm:rounded-[16px] md:rounded-[20px] border border-white/[0.08] bg-white/[0.02] backdrop-blur-2xl transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${logoActive ? "scale-[0.96] opacity-80" : "scale-100"}`}
         >
           <svg 
             viewBox="0 0 200 200" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
-            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-white"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-13 md:h-13 text-white"
             style={{ animation: "spin 15s linear infinite" }}
           >
             <g stroke="currentColor" strokeWidth="10" strokeLinecap="round" opacity="0.95">
@@ -215,15 +215,15 @@ export default function Home() {
         </div>
 
         {/* NIRA Text & Subtitle */}
-        <div className="flex flex-col items-center mt-4 md:mt-8">
+        <div className="flex flex-col items-center mt-3 md:mt-6">
           <h1 
-            className="text-[36px] sm:text-[56px] md:text-[84px] font-[400] leading-[1] tracking-[0.35em] md:tracking-[0.4em] text-[#E4E4E7] font-sans drop-shadow-none pl-[0.35em] md:pl-[0.4em] mix-blend-normal"
+            className="text-[36px] sm:text-[56px] md:text-[80px] font-[700] leading-[1] tracking-[0.3em] md:tracking-[0.35em] text-white font-sans drop-shadow-none pl-[0.3em] md:pl-[0.35em] mix-blend-normal"
             style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", textShadow: "none" }}
           >
             NIRA
           </h1>
           <div 
-            className="mt-2 md:mt-4 text-[10px] sm:text-[11px] md:text-[13px] font-[500] tracking-[0.6em] md:tracking-[0.8em] uppercase text-[#71717A] pl-[0.6em] md:pl-[0.8em] mix-blend-normal"
+            className="mt-1 md:mt-2.5 text-[10px] sm:text-[11px] md:text-[12px] font-[600] tracking-[0.5em] md:tracking-[0.7em] uppercase text-zinc-400 pl-[0.5em] md:pl-[0.7em] mix-blend-normal"
             style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", textShadow: "none" }}
           >
             Intelligence
@@ -231,25 +231,25 @@ export default function Home() {
         </div>
 
         {/* Punchy Highlight */}
-        <div className="mt-6 md:mt-12 flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md mb-3 md:mb-5 shadow-[0_0_15px_rgba(255,255,255,0.02)]">
+        <div className="mt-8 md:mt-16 flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-white/[0.015] border border-white/[0.06] backdrop-blur-md mb-4 md:mb-6 shadow-[0_0_15px_rgba(255,255,255,0.01)]">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            <span className="text-[9px] sm:text-[10px] md:text-[12px] font-[600] text-white/70 tracking-[0.15em] uppercase">Neural Intelligence & Responsive Assistant</span>
+            <span className="text-[9px] sm:text-[10px] md:text-[11px] font-[600] text-zinc-300 tracking-[0.2em] uppercase">Neural Intelligence & Responsive Assistant</span>
           </div>
           
-          <h2 className="text-[18px] sm:text-[32px] md:text-[42px] font-[600] tracking-[-0.02em] font-[var(--font-display)] text-center leading-[1.3] md:leading-[1.2] max-w-[90%] md:max-w-3xl">
-            <span className="text-white">One request. </span>
-            <span className="text-white/40">Multiple intelligences.</span> <br />
+          <h2 className="text-[22px] sm:text-[38px] md:text-[52px] font-[800] tracking-[-0.03em] font-[var(--font-display)] text-center leading-[1.2] md:leading-[1.1] max-w-[95%] md:max-w-4xl text-white">
+            <span>One request. </span>
+            <span className="text-white/30">Multiple intelligences.</span> <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-amber-200 to-rose-500">The best possible answer.</span>
           </h2>
         </div>
 
-        <p className="mt-3 md:mt-6 max-w-[85%] sm:max-w-2xl text-[13px] sm:text-[15px] md:text-[17px] leading-[1.5] tracking-[-0.01em] font-sans antialiased text-[#A1A1AA] mix-blend-normal">
-          NIRA seamlessly integrates a network of the world's most powerful LLMs. It autonomously analyzes your request and dynamically routes it to the perfect model—delivering unprecedented precision across text, images, and video.
+        <p className="mt-4 md:mt-8 max-w-[85%] sm:max-w-2xl text-[14px] sm:text-[16px] md:text-[18px] leading-[1.6] tracking-[-0.01em] font-sans antialiased text-zinc-300 mix-blend-normal">
+          NIRA integrates the world's most powerful AI models, dynamically routing your request to the perfect engine to deliver unprecedented speed and precision across text, images, and video.
         </p>
 
         {/* Pills */}
-        <div className="mt-4 md:mt-8 w-full overflow-hidden relative">
+        <div className="mt-6 md:mt-10 w-full overflow-hidden relative">
           <div className="absolute left-0 top-0 bottom-0 w-8 md:hidden bg-gradient-to-r from-black via-black/50 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-8 md:hidden bg-gradient-to-l from-black via-black/50 to-transparent z-10 pointer-events-none" />
           <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory items-center justify-start md:justify-center px-6 md:px-0 gap-3 pb-4 pt-2 -mb-4">
@@ -294,7 +294,7 @@ export default function Home() {
               <span 
                 key={m.name} 
                 onMouseEnter={() => uiSound("hover")}
-                className="group snap-center shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-[500] tracking-[0.03em] text-white/50 border border-white/[0.05] bg-white/[0.01] backdrop-blur-xl transform-gpu transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.12] hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.03)] active:scale-[0.98] active:opacity-80 cursor-pointer"
+                className="group snap-center shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-[500] tracking-[0.03em] text-white/50 border border-white/[0.04] bg-white/[0.01] backdrop-blur-xl transform-gpu transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.1] hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] active:scale-[0.98] active:opacity-80 cursor-pointer"
               >
                 {m.icon}
                 <span className="antialiased">{m.name}</span>
@@ -304,11 +304,11 @@ export default function Home() {
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-5 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 w-full px-6 max-w-[320px] sm:max-w-none mx-auto">
+        <div className="mt-8 md:mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-6 max-w-[320px] sm:max-w-none mx-auto">
           <button
             onMouseEnter={() => { uiSound("hover"); router.prefetch("/login"); }}
             onClick={() => { uiSound("enter"); setLeaving(true); router.push("/login"); }}
-            className="group relative overflow-hidden flex items-center justify-center w-full sm:w-[220px] h-[50px] md:h-[56px] rounded-full text-[15px] md:text-[16px] font-[500] tracking-[0.02em] text-white bg-[#0A0A0A] border border-white/[0.12] shadow-[0_8px_20px_rgba(0,0,0,0.6)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hover:bg-[#1A1A1A] md:hover:border-white/[0.2] md:hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] md:hover:scale-[1.02] active:scale-[0.94] active:bg-[#1A1A1A] active:duration-75"
+            className="group relative overflow-hidden flex items-center justify-center w-full sm:w-[220px] h-[52px] md:h-[58px] rounded-full text-[15px] md:text-[16px] font-[600] tracking-tight text-white bg-[#0D0D10]/80 backdrop-blur-2xl border border-white/[0.12] shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#161619]/90 hover:border-white/[0.2] hover:shadow-[0_0_20px_rgba(255,255,255,0.04)] hover:scale-[1.02] active:scale-[0.94] active:bg-[#161619] active:duration-75"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent translate-x-[-100%] md:group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
@@ -323,7 +323,7 @@ export default function Home() {
               }
               window.open("/nira", "_blank", "noopener,noreferrer");
             }}
-            className="group relative overflow-hidden flex items-center justify-center gap-2.5 w-full sm:w-[220px] h-[50px] md:h-[56px] rounded-full text-[15px] md:text-[16px] font-[500] tracking-[0.02em] text-[#A1A1AA] bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hover:text-white md:hover:bg-white/[0.06] md:hover:border-white/[0.15] md:hover:scale-[1.02] active:scale-[0.94] active:bg-white/[0.08] active:duration-75"
+            className="group relative overflow-hidden flex items-center justify-center gap-2.5 w-full sm:w-[220px] h-[52px] md:h-[58px] rounded-full text-[15px] md:text-[16px] font-[600] tracking-tight text-zinc-400 bg-white/[0.015] backdrop-blur-2xl border border-white/[0.06] shadow-[0_4px_16px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white hover:bg-white/[0.04] hover:border-white/[0.12] hover:scale-[1.02] active:scale-[0.94] active:bg-white/[0.06] active:duration-75"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent translate-x-[-100%] md:group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
@@ -334,7 +334,7 @@ export default function Home() {
           </button>
         </div>
 
-        <p className="mt-6 md:mt-10 mb-0 text-[11px] md:text-[13px] text-[#52525B] tracking-[0.02em] font-[400] antialiased">
+        <p className="mt-10 md:mt-16 mb-0 text-[11px] md:text-[12px] text-zinc-600 tracking-[0.04em] uppercase font-[500] antialiased">
           Built for creators, teams & AI-first companies
         </p>
 
