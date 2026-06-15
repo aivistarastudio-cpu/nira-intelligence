@@ -86,7 +86,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`h-full scroll-smooth dark ${inter.variable} ${jetbrainsMono.variable}`} 
+      className={`scroll-smooth dark ${inter.variable} ${jetbrainsMono.variable}`} 
     >
       <head />
 
@@ -117,23 +117,22 @@ export default function RootLayout({
           </div>
         </div>
         <script dangerouslySetInnerHTML={{ __html: `
-          window.addEventListener('load', function() {
-            var p = document.getElementById('nira-native-preloader');
-            if (p) {
-              p.style.opacity = '0';
-              p.style.pointerEvents = 'none';
-              setTimeout(function() { p.style.display = 'none'; }, 800);
-            }
-          });
-          // Fallback if load event already fired
-          setTimeout(function() {
+          function hidePreloader() {
             var p = document.getElementById('nira-native-preloader');
             if (p && p.style.opacity !== '0') {
               p.style.opacity = '0';
               p.style.pointerEvents = 'none';
               setTimeout(function() { p.style.display = 'none'; }, 800);
             }
-          }, 3000);
+          }
+          if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            hidePreloader();
+          } else {
+            document.addEventListener('DOMContentLoaded', hidePreloader);
+          }
+          window.addEventListener('load', hidePreloader);
+          // High-speed fallback: auto-reveal after 800ms to guarantee no scroll blocking
+          setTimeout(hidePreloader, 800);
         `}} />
 
         <style dangerouslySetInnerHTML={{ __html: `* { text-shadow: none !important; } @keyframes spin { 100% { transform: rotate(360deg); } }` }} />
