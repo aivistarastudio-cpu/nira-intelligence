@@ -383,7 +383,7 @@ export default function Home() {
 
       </div>
 
-      <div className={`relative z-10 w-full min-h-[100dvh] flex flex-col justify-center transition-all duration-1000 delay-300 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
+      <div className={`relative z-10 w-full flex flex-col transition-all duration-1000 delay-300 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
         <PremiumReviews />
       </div>
 

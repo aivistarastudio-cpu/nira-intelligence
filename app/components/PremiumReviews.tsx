@@ -405,7 +405,7 @@ export default function PremiumReviews() {
   if (!isClient) return null;
 
   return (
-    <div id="reviews-section" className="relative w-full py-20 md:py-32 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none">
+    <div id="reviews-section" className="relative w-full pt-12 pb-20 md:pt-16 md:pb-32 overflow-visible bg-transparent perspective-[1200px] flex flex-col items-center select-none">
 
       {/* Dedicated Neural Canvas for Reviews Section */}
       <canvas
