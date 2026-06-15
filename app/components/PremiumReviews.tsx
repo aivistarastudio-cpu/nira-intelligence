@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { fetchApprovedReviews, submitReview } from "@/app/actions/reviewActions";
+import { smoothScrollTo } from "@/lib/scrollUtils";
 
 const initialReviews: any[] = [];
 
@@ -506,7 +507,7 @@ export default function PremiumReviews() {
                 const el = document.getElementById("reviews-section");
                 if (el) {
                   const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                  window.scrollTo({ top: y, behavior: 'smooth' });
+                  smoothScrollTo(y, 850);
                 }
               }
               setShowAll(!showAll);

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import PremiumReviews from "./components/PremiumReviews";
 import NiraOrbLogo from "./components/NiraOrbLogo";
 import { playUISound } from "@/lib/audioEngine";
+import { smoothScrollTo } from "@/lib/scrollUtils";
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -349,7 +350,7 @@ export default function Home() {
             <button
               onClick={() => {
                 uiSound("click");
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                smoothScrollTo(0, 850);
               }}
               className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
                 activeSection === "hero"
@@ -365,7 +366,8 @@ export default function Home() {
                 uiSound("click");
                 const el = document.getElementById("reviews-section");
                 if (el) {
-                  el.scrollIntoView({ behavior: "smooth" });
+                  const targetY = el.getBoundingClientRect().top + window.scrollY;
+                  smoothScrollTo(targetY, 850);
                 }
               }}
               className={`px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-[600] tracking-[0.05em] uppercase transition-all duration-500 cursor-pointer ${
@@ -389,7 +391,7 @@ export default function Home() {
       <button
         onClick={() => {
           uiSound("click");
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          smoothScrollTo(0, 850);
         }}
         className={`fixed bottom-6 right-6 md:bottom-8 md:right-10 z-55 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0D0D10]/80 backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-zinc-400 hover:text-white hover:scale-[1.05] active:scale-[0.92] hover:border-white/[0.15] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
           isScrolled 
