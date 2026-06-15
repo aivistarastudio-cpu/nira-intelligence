@@ -387,6 +387,33 @@ export default function Home() {
       <div className={`relative z-10 w-full min-h-[100dvh] flex flex-col justify-center transition-all duration-1000 delay-300 snap-start shrink-0 ${leaving ? "opacity-0 translate-y-8" : "opacity-100 translate-y-0"}`}>
         <PremiumReviews />
       </div>
+
+      {/* Premium Scroll-to-Top Button */}
+      <button
+        onClick={() => {
+          uiSound("click");
+          mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+        className={`fixed bottom-6 right-6 md:bottom-8 md:right-10 z-55 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0D0D10]/80 backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-zinc-400 hover:text-white hover:scale-[1.05] active:scale-[0.92] hover:border-white/[0.15] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
+          isScrolled 
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto" 
+            : "opacity-0 translate-y-4 scale-75 pointer-events-none"
+        }`}
+        style={{ WebkitTapHighlightColor: "transparent" }}
+        title="Scroll to Top"
+      >
+        <svg 
+          className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2.5" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <polyline points="18 15 12 9 6 15" />
+        </svg>
+      </button>
     </main>
   );
 }
